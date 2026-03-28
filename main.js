@@ -230,22 +230,60 @@ if (sequenceSection) {
 }
 
 // -------------------------------------
-// CARD HOVER → FUNDO DINÂMICO
-// Cada card activa o seu bg-layer correspondente
+// CARD HOVER → FUNDO DINÂMICO + TEXTO ANIMADO
 // -------------------------------------
 
 const cardWrappers = document.querySelectorAll('.cards-grid .card-wrapper');
 const bgLayers     = document.querySelectorAll('.bg-layer');
 const cardsGrid    = document.querySelector('.cards-grid');
 
+const labelSlot = document.querySelector('.label-slot');
+const dateSlot  = document.querySelector('.date-slot');
+
+const DEFAULT_LABEL = 'AGENDA DE SHOW DA CLÈ';
+const DEFAULT_DATE  = '';
+
+const cardData = [
+  { label: 'TRAPLANDIA 2ª EDIÇÃO', date: '02.05.2026' },
+  { label: 'PERFORMER SHOW',       date: '15.06.2026' },
+  { label: 'BELO — MAPUTO',        date: '24.06.2026' },
+];
+
+function animateSlot(slot, newText) {
+  if (!slot) return;
+  const visible = slot.querySelector('.visible');
+  const hidden  = slot.querySelector('.above, .below');
+  if (!visible || !hidden) return;
+
+  hidden.textContent = newText;
+
+  hidden.classList.remove('above', 'below');
+  hidden.classList.add('above');
+
+  void hidden.offsetWidth;
+
+  visible.classList.remove('visible');
+  visible.classList.add('below');
+
+  hidden.classList.remove('above');
+  hidden.classList.add('visible');
+}
+
 cardWrappers.forEach((card, index) => {
   card.addEventListener('mouseenter', () => {
     bgLayers.forEach(l => l.classList.remove('active'));
     bgLayers[index]?.classList.add('active');
+
+    const data = cardData[index];
+    if (data) {
+      animateSlot(labelSlot, data.label);
+      animateSlot(dateSlot,  data.date);
+    }
   });
 });
 
-// Remove fundo ao sair do grid todo
 cardsGrid?.addEventListener('mouseleave', () => {
   bgLayers.forEach(l => l.classList.remove('active'));
+  animateSlot(labelSlot, DEFAULT_LABEL);
+  animateSlot(dateSlot,  DEFAULT_DATE);
 });
