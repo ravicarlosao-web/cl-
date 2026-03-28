@@ -208,6 +208,20 @@ modalLeft?.addEventListener('click', (e) => {
 
 document.addEventListener('keydown', e => { if (e.key === 'Escape') closeArtistModal(); });
 
+// Mede o bottom do header e expõe como variável CSS para a foto do artista.
+// É chamado também após a animação de entrada (o header anima 1.2s).
+function updateHeaderBottom() {
+  const hdr = document.querySelector('.header');
+  if (!hdr) return;
+  const bottom = hdr.getBoundingClientRect().bottom;
+  document.documentElement.style.setProperty('--header-bottom', `${Math.round(bottom)}px`);
+}
+// Primeira medição imediata (fallback)
+updateHeaderBottom();
+// Segunda medição após a animação de entrada do header (1.2s + buffer)
+setTimeout(updateHeaderBottom, 1400);
+window.addEventListener('resize', updateHeaderBottom);
+
 // Animação de Entrada Premium (Revealing UI Elements de forma fluída)
 function triggerEntrance() {
   const header = document.querySelector('.header');

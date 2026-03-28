@@ -865,8 +865,6 @@ body {
   position: fixed;
   inset: 0;
   z-index: 50;
-  display: grid;
-  grid-template-columns: 33% 67%;
   pointer-events: none;
   opacity: 0;
   transition: opacity 0.45s cubic-bezier(0.16, 1, 0.3, 1);
@@ -879,9 +877,14 @@ body {
 
 /* ── PAINEL ESQUERDO ──
    Overlay escuro semitransparente sobre o carrossel (que fica visível
-   por baixo). O texto flui de cima para baixo: tagline → espaço → links → CTA */
+   por baixo). Posicionado absolutamente para cobrir a esquerda inteira
+   (o header fica por cima dele com z-index: 100). */
 .artist-modal__left {
-  position: relative;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width: 33%;
   display: flex;
   flex-direction: column;
   padding: clamp(68px, 10vh, 96px) clamp(1.5rem, 3.5vw, 3rem) clamp(2rem, 5vh, 4rem);
@@ -950,8 +953,16 @@ body {
 }
 
 /* ── PAINEL DIREITO — foto grande ──
+   NÃO toca no header em cima nem no fundo do ecrã.
+   top: var(--header-bottom) medido em JS para alinhar com o fundo do header.
+   bottom: 18px — margem inferior visível.
    Desliza da direita ao abrir. Clicar fecha o modal. */
 .artist-modal__photo {
+  position: absolute;
+  top: var(--header-bottom, 68px);
+  bottom: 18px;
+  left: 33%;
+  right: 0;
   background-size: cover;
   background-position: center top;
   transform: translateX(80px);
@@ -969,12 +980,10 @@ body {
 
 /* ── MOBILE ── */
 @media (max-width: 767px) {
-  .artist-modal {
-    grid-template-columns: 1fr;
-    grid-template-rows: auto 1fr;
-  }
-
   .artist-modal__left {
+    width: 100%;
+    bottom: auto;
+    min-height: 50vh;
     padding-top: clamp(68px, 12vh, 90px);
     padding-bottom: 2rem;
   }
@@ -985,8 +994,11 @@ body {
   }
 
   .artist-modal__photo {
+    left: 0;
+    top: auto;
+    top: 50vh;
+    bottom: 0;
     transform: translateY(50px);
-    min-height: 45vh;
   }
 
   .artist-modal.is-open .artist-modal__photo {
