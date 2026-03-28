@@ -311,6 +311,15 @@ function initSlot(slot, text) {
 initSlot(labelSlot, DEFAULT_LABEL);
 initSlot(dateSlot,  DEFAULT_DATE);
 
+// Auto-centrar a secção quando o rato entra na grid
+let centeredOnce = false;
+cardsGrid?.addEventListener('mouseenter', () => {
+  if (!centeredOnce && stickyEl) {
+    centeredOnce = true;
+    stickyEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  }
+});
+
 cardWrappers.forEach((card, index) => {
   card.addEventListener('mouseenter', () => {
     bgLayers.forEach(l => l.classList.remove('active'));
