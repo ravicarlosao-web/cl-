@@ -54,9 +54,12 @@ artists.forEach((artist) => {
   cell.appendChild(img);
   cell.appendChild(info);
 
-  // Clique abre o modal (ignorado se foi um drag)
-  cell.addEventListener('click', () => {
-    if (dragMoved) return;
+  // Deteção de clique vs. drag por célula (independente do estado global)
+  let pdownX = 0, pdownY = 0;
+  cell.addEventListener('pointerdown', (e) => { pdownX = e.clientX; pdownY = e.clientY; });
+  cell.addEventListener('click', (e) => {
+    const dist = Math.hypot(e.clientX - pdownX, e.clientY - pdownY);
+    if (dist > 10) return;   // foi drag, ignora
     openArtistModal(artist);
   });
 
