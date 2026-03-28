@@ -540,7 +540,9 @@ body {
   display: flex;
   flex-direction: column;
   transition: filter 0.1s linear;
-  cursor: grab;
+  cursor: pointer;
+  user-select: none;
+  -webkit-user-select: none;
 }
 
 .carousel-cell:active {
@@ -571,7 +573,6 @@ body {
   background-position: center;
   margin-bottom: clamp(6px, 1vw, 16px);
   box-shadow: 0 10px 40px rgba(0, 0, 0, 0.6);
-  pointer-events: none;
 }
 
 .carousel-cell.loaded .card-image {
@@ -581,7 +582,6 @@ body {
 
 .card-info {
   text-align: left;
-  pointer-events: none;
   opacity: 0;
   transform: translateY(-40px);
   transition: opacity 0.8s ease 0.15s, transform 1.2s cubic-bezier(0.22, 1, 0.36, 1) 0.1s;

@@ -54,24 +54,24 @@ artists.forEach((artist) => {
   cell.appendChild(img);
   cell.appendChild(info);
 
-  // Overlay invisível que cobre TODO o card — garante clique em qualquer ponto
-  const clickZone = document.createElement('div');
-  clickZone.className = 'card-click-zone';
-  cell.appendChild(clickZone);
-
-  // Clique vs. drag/segurar: tempo + distância
+  // Clique vs. drag diretamente na célula:
+  // stopPropagation no mousedown evita que o document inicie o modo arrastar
   let pdownX = 0, pdownY = 0, pdownTime = 0;
-  clickZone.addEventListener('pointerdown', (e) => {
-    pdownX = e.clientX;
-    pdownY = e.clientY;
+
+  cell.addEventListener('mousedown', (e) => {
+    e.stopPropagation();
+  });
+  cell.addEventListener('pointerdown', (e) => {
+    pdownX    = e.clientX;
+    pdownY    = e.clientY;
     pdownTime = Date.now();
   });
-  clickZone.addEventListener('click', (e) => {
-    e.stopPropagation();
+  cell.addEventListener('pointerup', (e) => {
     const held = Date.now() - pdownTime;
     const dist = Math.hypot(e.clientX - pdownX, e.clientY - pdownY);
-    if (held > 500 || dist > 12) return;
-    openArtistModal(artist);
+    if (held < 500 && dist < 14) {
+      openArtistModal(artist);
+    }
   });
 
   carousel.appendChild(cell);
