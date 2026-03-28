@@ -54,7 +54,9 @@ body {
 
 .scroll-sequence-wrapper {
   background-color: var(--bg-color);
-  width: 100%;
+  width: 100vw;
+  margin-left: calc(50% - 50vw);
+  margin-right: calc(50% - 50vw);
   min-height: 100vh;
   position: relative;
   z-index: 10;
