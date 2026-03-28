@@ -210,11 +210,14 @@ function playSequence() {
     }
   }, 1750);
 
-  // 4. Após a animação dos cards terminar (~1.75s + 0.9s de transição + 0.28s delay = ~3s),
-  //    contrai a secção para a altura real dos cards
+  // 4. Após a animação dos cards terminar, fixa a secção em 100vh e centra no viewport
   setTimeout(() => {
     if (stickyEl) {
       stickyEl.classList.add('compact');
+      // Centra suavemente a secção no ecrã para toda a experiência ser visível
+      setTimeout(() => {
+        stickyEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      }, 200);
     }
   }, 3100);
 }
@@ -311,14 +314,6 @@ function initSlot(slot, text) {
 initSlot(labelSlot, DEFAULT_LABEL);
 initSlot(dateSlot,  DEFAULT_DATE);
 
-// Auto-centrar a secção quando o rato entra na grid
-let centeredOnce = false;
-cardsGrid?.addEventListener('mouseenter', () => {
-  if (!centeredOnce && stickyEl) {
-    centeredOnce = true;
-    stickyEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
-  }
-});
 
 cardWrappers.forEach((card, index) => {
   card.addEventListener('mouseenter', () => {
