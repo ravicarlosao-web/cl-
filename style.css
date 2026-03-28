@@ -963,10 +963,8 @@ body {
   bottom: var(--header-bottom, 68px);
   left: 33%;
   right: 0;
-  background-color: #000;
-  background-size: contain;
-  background-repeat: no-repeat;
-  background-position: center center;
+  background-size: cover;
+  background-position: center top;
   transform: translateX(80px);
   opacity: 0;
   transition:
