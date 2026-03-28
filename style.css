@@ -75,9 +75,10 @@ body {
 }
 
 .scroll-sequence-sticky.compact {
-  height: auto;
+  height: calc(100vw * 3412 / 6551);
   min-height: 0;
-  padding: clamp(3rem, 7vh, 5rem) 0;
+  padding: 0;
+  overflow: hidden;
 }
 
 /* ---- FUNDO DINÂMICO (hover dos cards) ---- */
