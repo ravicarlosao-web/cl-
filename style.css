@@ -1,0 +1,589 @@
+:root {
+  --bg-color: #000;
+  --text-main: #fff;
+  --text-dim: #888;
+  --font-family: 'Poppins', sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background-color: var(--bg-color);
+  color: var(--text-main);
+  font-family: var(--font-family);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+  user-select: none;
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #0a0a0a;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #333;
+}
+
+.site-wrapper {
+  /* Fluid padding depending on viewport size to avoid collision */
+  padding-top: clamp(0.5rem, 1vw, 1rem);
+  /* Espaço zerado/reduzido acima do header */
+  padding-bottom: clamp(1rem, 4vw, 2.5rem);
+  padding-left: clamp(1rem, 5vw, 3rem);
+  padding-right: clamp(1rem, 5vw, 3rem);
+  max-width: 1920px;
+  margin: 0 auto;
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ------------------------------------- */
+/* TELA 2 - SCROLL SEQUENCE (STATEMENT -> 3 CARDS) */
+/* ------------------------------------- */
+
+.scroll-sequence-wrapper {
+  background-color: var(--bg-color);
+  width: 100%;
+  min-height: 100vh;
+  position: relative;
+  z-index: 10;
+  margin-top: clamp(4rem, 12vh, 10rem); /* separa do carrossel acima */
+}
+
+.scroll-sequence-sticky {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* ---- FUNDO DINÂMICO (hover dos cards) ---- */
+.section-bg {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100vw;          /* quebra o padding do site-wrapper — vai de borda a borda */
+  height: 100%;
+  overflow: hidden;
+  z-index: 0;
+}
+
+.bg-layer {
+  position: absolute;
+  inset: -5%;            /* extra para o blur não criar bordas */
+  background-size: cover;
+  background-position: center;
+  opacity: 0;
+  filter: blur(14px) brightness(0.3) saturate(1.3);
+  transform: scale(1.1);
+  transition: opacity 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+  will-change: opacity;
+}
+
+.bg-layer.active {
+  opacity: 1;
+}
+
+/* ------------------------------------------- */
+/* CAMADA 1: MONUMENTAL TEXT (CINEMATIC REVEAL) */
+/* ------------------------------------------- */
+
+.cinematic-text {
+  position: absolute;
+  max-width: 1920px;
+  width: 100%;
+  padding: 0 clamp(1rem, 5vw, 3rem);
+  display: flex;
+  flex-direction: column;
+  z-index: 5;
+  will-change: transform, opacity;
+}
+
+/* Cada linha-slot esconde o texto antes de revelar */
+.cinematic-text .line-container {
+  overflow: hidden;              /* container-slot — o texto sobe de dentro */
+  transform-style: preserve-3d;
+}
+
+/* O massive-text começa abaixo e invisível */
+.cinematic-text .line-container .massive-text,
+.cinematic-text .line-container .side-text {
+  transform: translateY(110%);
+  opacity: 0;
+  transition:
+    transform 0.75s cubic-bezier(0.16, 1, 0.3, 1),
+    opacity 0.01s linear;
+}
+
+/* Texto ENTRA — sobe do slot */
+.cinematic-text.text-in .line-container .massive-text,
+.cinematic-text.text-in .line-container .side-text {
+  transform: translateY(0%);
+  opacity: 1;
+}
+.cinematic-text.text-in .line-container:nth-child(1) .massive-text { transition-delay: 0.04s; }
+.cinematic-text.text-in .line-container:nth-child(2) .massive-text { transition-delay: 0.14s; }
+.cinematic-text.text-in .line-container:nth-child(2) .side-text    { transition-delay: 0.20s; }
+.cinematic-text.text-in .line-container:nth-child(3) .massive-text { transition-delay: 0.24s; }
+.cinematic-text.text-in .line-container:nth-child(4) .massive-text { transition-delay: 0.34s; }
+
+/* Texto SAI — colapsa para cima em cascata reversa (rápido e dramático) */
+.cinematic-text.text-exit .line-container .massive-text,
+.cinematic-text.text-exit .line-container .side-text {
+  transform: translateY(-115%);
+  opacity: 0;
+  transition:
+    transform 0.38s cubic-bezier(0.55, 0, 1, 0.45),
+    opacity 0.38s ease-in;
+}
+/* Linha de baixo sai primeiro → ilusão de colapso dramático */
+.cinematic-text.text-exit .line-container:nth-child(4) .massive-text { transition-delay: 0s; }
+.cinematic-text.text-exit .line-container:nth-child(3) .massive-text { transition-delay: 0.06s; }
+.cinematic-text.text-exit .line-container:nth-child(2) .massive-text { transition-delay: 0.12s; }
+.cinematic-text.text-exit .line-container:nth-child(2) .side-text    { transition-delay: 0.08s; }
+.cinematic-text.text-exit .line-container:nth-child(1) .massive-text { transition-delay: 0.18s; }
+
+
+/* ------------------------------------------- */
+/* CAMADA 2: CARDS (3D PERSPECTIVE ENTRANCE)   */
+/* ------------------------------------------- */
+.three-cards-container {
+  position: absolute;
+  width: 100%;
+  max-width: 1400px;
+  padding: 0 clamp(1rem, 5vw, 3rem);
+  z-index: 15;
+  pointer-events: none;
+  display: flex;
+  flex-direction: column;
+  gap: clamp(1.5rem, 3vw, 2.5rem);
+}
+
+.section-label {
+  font-family: 'Poppins', sans-serif;
+  font-size: clamp(1.1rem, 2vw, 1.6rem);
+  font-weight: 400;
+  letter-spacing: 0.02em;
+  color: #fff;
+  text-transform: uppercase;
+  margin: 0;
+}
+
+.three-cards-container.active {
+  pointer-events: auto;
+}
+
+/* Título da secção começa escondido */
+.three-cards-container .section-label {
+  opacity: 0;
+  transform: translateY(16px);
+  transition: opacity 0.6s ease, transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Entra junto com o primeiro card */
+.three-cards-container.cards-in .section-label {
+  opacity: 1;
+  transform: translateY(0);
+  transition-delay: 0s;
+}
+
+.cards-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: clamp(1.5rem, 3vw, 3rem);
+  width: 100%;
+  perspective: 1400px;
+  perspective-origin: 50% -30%;
+}
+
+/* Cards começam abaixo e inclinados */
+.cards-grid .card-wrapper {
+  opacity: 0;
+  transform: translateY(70px) rotateX(28deg) scale(0.94);
+  filter: blur(10px);
+  transition:
+    opacity   0.7s ease,
+    transform 0.9s cubic-bezier(0.16, 1, 0.3, 1),
+    filter    0.65s ease;
+  will-change: opacity, transform, filter;
+  transform-origin: top center;
+}
+
+/* Entram em cascata 3D */
+.three-cards-container.cards-in .card-wrapper {
+  opacity: 1;
+  transform: translateY(0) rotateX(0) scale(1);
+  filter: blur(0);
+}
+.three-cards-container.cards-in .card-wrapper:nth-child(1) { transition-delay: 0s; }
+.three-cards-container.cards-in .card-wrapper:nth-child(2) { transition-delay: 0.14s; }
+.three-cards-container.cards-in .card-wrapper:nth-child(3) { transition-delay: 0.28s; }
+
+/* ---- EVENT CARD (formato Instagram 4:5, sem arredondamento) ---- */
+.event-card {
+  border-radius: 0;         /* sem arredondamento */
+  overflow: hidden;
+  width: 100%;
+  aspect-ratio: 4 / 5;  /* Instagram portrait — imagens encaixam perfeitamente */
+  position: relative;
+  cursor: pointer;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+  transition: transform 0.45s cubic-bezier(0.16, 1, 0.3, 1),
+              box-shadow 0.45s ease;
+}
+
+.event-card img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center top;
+  display: block;
+  transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Overlay escuro que aparece no hover */
+.event-card::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    180deg,
+    rgba(0, 0, 0, 0) 50%,
+    rgba(0, 0, 0, 0.55) 100%
+  );
+  opacity: 0;
+  transition: opacity 0.4s ease;
+}
+
+.event-card:hover {
+  transform: scale(1.03) translateY(-6px);
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.75);
+}
+
+.event-card:hover img {
+  transform: scale(1.06);
+}
+
+.event-card:hover::after {
+  opacity: 1;
+}
+
+
+.line-container {
+  display: flex;
+  align-items: flex-end;
+  position: relative;
+  width: 100%;
+  padding-bottom: 0.12em; /* prevent descenders being clipped by overflow:hidden */
+}
+
+.massive-text {
+  font-family: 'Poppins', sans-serif;
+  font-weight: 400;
+  /* Letra super fina elegante, igual ref */
+  font-size: clamp(3rem, 11vw, 14rem);
+  /* O texto deforma fluido acompanhando wide evitando overflow no UNICA COM CLE */
+  text-transform: uppercase;
+  color: #f2f2f2;
+  line-height: 0.85;
+  /* As linhas se imprensam quase mastigando o texto de cima */
+  letter-spacing: -0.04em;
+  margin: 0;
+  padding: 0;
+  position: relative;
+  z-index: 5;
+  /* SEMPRE Puxa o texto pra frente da imagem no line-container */
+  text-align: left;
+}
+
+/* Side text alignment on second line */
+.has-sidetext {
+  gap: clamp(1rem, 3vw, 3rem);
+}
+
+.side-text {
+  padding-bottom: clamp(0.2rem, 1.5vw, 1.5rem);
+  display: flex;
+  flex-direction: column;
+}
+
+.side-text p {
+  font-size: clamp(0.5rem, 1vw, 1.2rem);
+  font-weight: 500;
+  color: #aaaaaa;
+  margin: 0;
+  line-height: 1.2;
+}
+
+
+
+/* ----------------HEADER---------------- */
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: relative;
+  z-index: 100;
+  padding-bottom: clamp(1rem, 3vw, 2rem);
+  opacity: 0;
+  transform: translateY(-25px);
+  transition: opacity 1.2s ease 0.1s, transform 1.2s cubic-bezier(0.16, 1, 0.3, 1) 0.1s;
+}
+
+.header.loaded {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.logo h1 {
+  /* Fluid typography */
+  font-size: clamp(2rem, 4vw, 2.8rem);
+  font-weight: 900;
+  letter-spacing: -2.5px;
+  text-transform: uppercase;
+  margin-top: -5px;
+  cursor: pointer;
+}
+
+.nav-links {
+  display: flex;
+  gap: clamp(1.5rem, 3vw, 3.5rem);
+  margin-top: -5px;
+}
+
+.nav-links a {
+  color: var(--text-main);
+  text-decoration: none;
+  font-weight: 500;
+  font-size: clamp(1rem, 1.4vw, 1.6rem);
+  letter-spacing: -0.5px;
+  transition: color 0.3s ease, transform 0.3s ease;
+  position: relative;
+  display: inline-block;
+}
+
+.nav-links a::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 0;
+  height: 2px;
+  background-color: #e60000;
+  transition: width 0.35s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+.nav-links a:hover {
+  color: #e60000;
+  transform: translateY(-2px);
+}
+
+.nav-links a:hover::after {
+  width: 100%;
+}
+
+/* Mobile Menu Action Elements */
+.mobile-toggle {
+  display: none;
+  background: none;
+  border: none;
+  cursor: pointer;
+  z-index: 101;
+}
+
+/* ----------------HERO SCENE---------------- */
+.hero-scene {
+  flex-grow: 1;
+  position: relative;
+  width: 100%;
+  /* Perspective shrinks gracefully on tiny screens handling distortion smoothly */
+  perspective: clamp(800px, 80vw, 1200px);
+  transform-style: preserve-3d;
+  /* Habilita profundidade de campo mesclada para o texto */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: clamp(0rem, 2vw, 1rem);
+  min-height: 80vh;
+  /* Garante que o cilindro gigante tenha tela inteira privativa para girar */
+  z-index: 20;
+  /* Permite que o Hero sobreponha elegantemente a seção de baixo se houver interseção no scroll */
+}
+
+.carousel {
+  /* Ultra-fluid dimensions driven rigidly by viewwidth to never glitch */
+  width: clamp(110px, 15vw, 200px);
+  height: clamp(140px, 20vw, 250px);
+  position: absolute;
+  top: 2%;
+  /* Sobe a roda inteira para o teto, quase colando no Header */
+  transform-style: preserve-3d;
+  will-change: transform;
+}
+
+.carousel-cell {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  left: 0;
+  top: 0;
+  backface-visibility: visible;
+  display: flex;
+  flex-direction: column;
+  transition: filter 0.1s linear;
+  cursor: grab;
+}
+
+.carousel-cell:active {
+  cursor: grabbing;
+}
+
+/* Física de Entrada Individual Premium e Ágil (Drop Cascading) */
+.carousel-cell .card-image {
+  opacity: 0;
+  transform: translateY(-150px) rotateX(20deg) scale(0.85);
+  /* Inicia mais alto/longo para ver a caida descendo */
+  transition: opacity 1s ease, transform 1.5s cubic-bezier(0.22, 1, 0.36, 1);
+  /* Animação luxuosa e devagar (1.5s) */
+  transform-origin: bottom center;
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  flex-grow: 0;
+  background-size: cover;
+  background-position: center;
+  margin-bottom: clamp(6px, 1vw, 16px);
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.6);
+  pointer-events: none;
+}
+
+.carousel-cell.loaded .card-image {
+  opacity: 1;
+  transform: translateY(0) rotateX(0deg) scale(1);
+}
+
+.card-info {
+  text-align: left;
+  pointer-events: none;
+  opacity: 0;
+  transform: translateY(-40px);
+  transition: opacity 0.8s ease 0.15s, transform 1.2s cubic-bezier(0.22, 1, 0.36, 1) 0.1s;
+}
+
+.carousel-cell.loaded .card-info {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.card-info h3 {
+  font-size: clamp(0.75rem, 1.2vw, 1.15rem);
+  font-weight: 700;
+  letter-spacing: -0.3px;
+  margin-bottom: 2px;
+}
+
+.card-info p {
+  font-size: clamp(0.5rem, 0.8vw, 0.65rem);
+  font-weight: 600;
+  color: #777;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+/* Soft Edge Fade Overlays */
+.scene-overlay {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 10%;
+  pointer-events: none;
+  z-index: 50;
+}
+
+.left-fade {
+  left: -2%;
+  background: linear-gradient(to right, rgba(0, 0, 0, 1) 0%, rgba(0, 0, 0, 0) 100%);
+}
+
+.right-fade {
+  right: -2%;
+  background: linear-gradient(to left, rgba(0, 0, 0, 1) 0%, rgba(0, 0, 0, 0) 100%);
+}
+
+/* ----------------ULTRA RESPONSIVE FOR MOBILES---------------- */
+@media (max-width: 768px) {
+  .header {
+    padding-top: 5px;
+  }
+
+  /* Mobile Hamburger button architecture */
+  .mobile-toggle {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 32px;
+    height: 18px;
+  }
+
+  .mobile-toggle .bar {
+    width: 100%;
+    height: 2px;
+    background-color: var(--text-main);
+    transition: transform 0.3s, opacity 0.3s;
+  }
+
+  .mobile-toggle.active .bar:nth-child(1) {
+    transform: translateY(8px) rotate(45deg);
+  }
+
+  .mobile-toggle.active .bar:nth-child(2) {
+    transform: translateY(-8px) rotate(-45deg);
+  }
+
+  /* Slide-in Mobile Drawer replaces native top row inline block */
+  .nav-links {
+    position: fixed;
+    top: 0;
+    right: -100%;
+    width: 75vw;
+    height: 100vh;
+    background-color: rgba(10, 10, 10, 0.98);
+    backdrop-filter: blur(10px);
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 3rem;
+    padding-top: 0;
+    transition: right 0.4s ease-in-out;
+    box-shadow: -15px 0 30px rgba(0, 0, 0, 0.8);
+    z-index: 90;
+  }
+
+  .nav-links.active {
+    right: 0;
+  }
+
+  .nav-links a {
+    font-size: 2rem;
+    /* Sized for tactile touch interaction */
+  }
+
+  .hero-scene {
+    margin-top: 3rem;
+  }
+}

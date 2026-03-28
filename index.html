@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sizzer | Independent Music Agency</title>
+    <!-- Importing modern premium font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="./style.css" />
+</head>
+<body>
+    <div class="site-wrapper">
+        <!-- HEADER (Kept Exactly As Asked) -->
+        <header class="header">
+            <div class="logo">
+                <h1>SIZZER</h1>
+            </div>
+            
+            <button class="mobile-toggle" id="mobile-menu-btn" aria-label="Menu" type="button">
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </button>
+            <nav class="nav-links" id="nav-links">
+                <a href="#work" class="nav-elem">WORK</a>
+                <a href="#about" class="nav-elem">ABOUT</a>
+                <a href="#publications" class="nav-elem">PUBLICATIONS</a>
+                <a href="#office" class="nav-elem">OFFICE</a>
+            </nav>
+        </header>
+
+        <!-- 3D HERO SCENE -->
+        <main class="hero-scene">
+            <div class="carousel" id="carousel">
+                <!-- Javascript will populate the 3D Cells here dynamically -->
+            </div>
+            
+            <!-- Radial overlay gradients to hide edge abruptions -->
+            <div class="scene-overlay left-fade"></div>
+            <div class="scene-overlay right-fade"></div>
+            
+        </main>
+
+        <!-- SEÇÃO SCROLL SEQUENCE (STATEMENT -> 3 CARDS) -->
+        <section class="scroll-sequence-wrapper" id="experiencia">
+            <div class="scroll-sequence-sticky">
+
+                <!-- Fundos que aparecem no hover de cada card -->
+                <div class="section-bg">
+                    <div class="bg-layer" data-card="1" style="background-image: url('./images/card1.jpg')"></div>
+                    <div class="bg-layer" data-card="2" style="background-image: url('./images/card2.jpg')"></div>
+                    <div class="bg-layer" data-card="3" style="background-image: url('./images/card3.jpg')"></div>
+                </div>
+            
+
+                <!-- CAMADA 1: STATEMENT COLOSSAL -->
+                <div class="statement-container cinematic-text">
+                    <div class="line-container">
+                        <h2 class="massive-text">VENHA</h2>
+                    </div>
+                    <div class="line-container has-sidetext">
+                        <h2 class="massive-text">VIVER UMA</h2>
+                        <div class="side-text">
+                            <p>(CONCEPTS)</p>
+                            <p>(IDEAS)</p>
+                            <p>(MOTIVES)</p>
+                        </div>
+                    </div>
+                    <div class="line-container">
+                        <h2 class="massive-text">EXPERENCIA</h2>
+                    </div>
+                    <div class="line-container">
+                        <h2 class="massive-text">UNICA COM CLÉ</h2>
+                    </div>
+                </div>
+
+                <!-- CAMADA 2: AGENDA DE SHOW — 3 CARDS IMAGEM -->
+                <div class="three-cards-container">
+                    <h2 class="section-label">AGENDA DE SHOW DA CLÈ</h2>
+                    <div class="cards-grid">
+                        <!-- Card 1: Trap La Vida - Onde Viemos -->
+                        <div class="card-wrapper">
+                            <div class="event-card">
+                                <img src="./images/card1.jpg" alt="Trap La Vida - Onde Viemos">
+                            </div>
+                        </div>
+                        <!-- Card 2: Performer -->
+                        <div class="card-wrapper">
+                            <div class="event-card">
+                                <img src="./images/card2.jpg" alt="Performer">
+                            </div>
+                        </div>
+                        <!-- Card 3: Belo - Maputo, Moçambique -->
+                        <div class="card-wrapper">
+                            <div class="event-card">
+                                <img src="./images/card3.jpg" alt="Belo - Maputo Moçambique">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+        </section>
+    </div>
+    
+    <script type="module" src="./main.js"></script>
+</body>
+</html>
