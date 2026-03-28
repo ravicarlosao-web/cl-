@@ -54,12 +54,17 @@ artists.forEach((artist) => {
   cell.appendChild(img);
   cell.appendChild(info);
 
-  // Deteção de clique vs. drag por célula (independente do estado global)
-  let pdownX = 0, pdownY = 0;
-  cell.addEventListener('pointerdown', (e) => { pdownX = e.clientX; pdownY = e.clientY; });
+  // Clique vs. drag/segurar: tempo + distância
+  let pdownX = 0, pdownY = 0, pdownTime = 0;
+  cell.addEventListener('pointerdown', (e) => {
+    pdownX = e.clientX;
+    pdownY = e.clientY;
+    pdownTime = Date.now();
+  });
   cell.addEventListener('click', (e) => {
+    const held = Date.now() - pdownTime;      // tempo em ms que o botão ficou pressionado
     const dist = Math.hypot(e.clientX - pdownX, e.clientY - pdownY);
-    if (dist > 10) return;   // foi drag, ignora
+    if (held > 500 || dist > 12) return;      // segurou (drag) → ignora; clique rápido → abre
     openArtistModal(artist);
   });
 
