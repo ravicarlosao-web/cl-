@@ -54,26 +54,6 @@ artists.forEach((artist) => {
   cell.appendChild(img);
   cell.appendChild(info);
 
-  // Clique vs. drag diretamente na célula:
-  // stopPropagation no mousedown evita que o document inicie o modo arrastar
-  let pdownX = 0, pdownY = 0, pdownTime = 0;
-
-  cell.addEventListener('mousedown', (e) => {
-    e.stopPropagation();
-  });
-  cell.addEventListener('pointerdown', (e) => {
-    pdownX    = e.clientX;
-    pdownY    = e.clientY;
-    pdownTime = Date.now();
-  });
-  cell.addEventListener('pointerup', (e) => {
-    const held = Date.now() - pdownTime;
-    const dist = Math.hypot(e.clientX - pdownX, e.clientY - pdownY);
-    if (held < 500 && dist < 14) {
-      openArtistModal(artist);
-    }
-  });
-
   carousel.appendChild(cell);
 });
 
@@ -139,7 +119,7 @@ document.addEventListener('mousedown', (e) => {
 document.addEventListener('mousemove', (e) => {
   if (!isDragging) return;
   const dx = e.clientX - startX;
-  if (Math.abs(dx) > 6) dragMoved = true;
+  if (Math.abs(dx) > 15) dragMoved = true;
   currentAngle = angleStart + (dx * 0.2); 
 });
 
@@ -166,6 +146,24 @@ document.addEventListener('touchmove', (e) => {
 }, { passive: true });
 
 document.addEventListener('touchend', stopDrag);
+
+// ================================================
+// CLIQUE NOS CARDS DO CARROSSEL → abre modal
+// Usa delegação: click borbulha do elemento clicado até ao document.
+// closest('.carousel-cell') identifica o card independente do filho clicado.
+// dragMoved garante que arrastar não abre o modal.
+// ================================================
+document.addEventListener('click', (e) => {
+  const cell = e.target.closest('.carousel-cell');
+  if (!cell || dragMoved) return;
+
+  const cellsArr = [...document.querySelectorAll('.carousel-cell')];
+  const idx      = cellsArr.indexOf(cell);
+  if (idx === -1) return;
+
+  const artist = artists[idx];
+  if (artist) openArtistModal(artist);
+});
 
 // ================================================
 // ARTIST MODAL — abrir/fechar com animação suave
