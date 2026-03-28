@@ -960,7 +960,7 @@ body {
 .artist-modal__photo {
   position: absolute;
   top: var(--header-bottom, 68px);
-  bottom: 18px;
+  bottom: var(--header-bottom, 68px);
   left: 33%;
   right: 0;
   background-size: cover;
