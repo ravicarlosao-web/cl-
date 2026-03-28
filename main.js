@@ -264,23 +264,23 @@ function buildWords(tray, text, visible) {
 }
 
 // Anima as palavras de um tray para dentro (entrando de cima para baixo)
-function animateWordsIn(tray, stagger = 0.07) {
+function animateWordsIn(tray, stagger = 0.18) {
   tray.querySelectorAll('.slot-word').forEach((w, i) => {
     w.style.transition = 'none';
-    w.style.transform  = 'translateY(-70%)';
+    w.style.transform  = 'translateY(-80%)';
     w.style.opacity    = '0';
     void w.offsetWidth;
-    w.style.transition = `transform 0.6s cubic-bezier(0.16,1,0.3,1) ${i * stagger}s, opacity 0.5s ease ${i * stagger}s`;
+    w.style.transition = `transform 1s cubic-bezier(0.16,1,0.3,1) ${i * stagger}s, opacity 0.8s ease ${i * stagger}s`;
     w.style.transform  = 'translateY(0)';
     w.style.opacity    = '1';
   });
 }
 
 // Anima as palavras de um tray para fora (saindo para baixo)
-function animateWordsOut(tray, stagger = 0.05) {
+function animateWordsOut(tray, stagger = 0.12) {
   tray.querySelectorAll('.slot-word').forEach((w, i) => {
-    w.style.transition = `transform 0.45s cubic-bezier(0.4,0,0.6,1) ${i * stagger}s, opacity 0.35s ease ${i * stagger}s`;
-    w.style.transform  = 'translateY(70%)';
+    w.style.transition = `transform 0.7s cubic-bezier(0.4,0,0.6,1) ${i * stagger}s, opacity 0.55s ease ${i * stagger}s`;
+    w.style.transform  = 'translateY(80%)';
     w.style.opacity    = '0';
   });
 }
