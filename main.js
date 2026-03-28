@@ -222,6 +222,20 @@ function playSequence() {
   }, 3100);
 }
 
+// Reinicia toda a secção para o estado inicial (silencioso, sem animação)
+function resetSequence() {
+  sequencePlayed = false;
+
+  // Texto cinematic volta ao estado escondido
+  cinematicText?.classList.remove('text-in', 'text-exit');
+
+  // Cards voltam ao estado inicial (escondidos)
+  threeCardsEl?.classList.remove('cards-in', 'active');
+
+  // Secção volta à altura completa (remove compact)
+  stickyEl?.classList.remove('compact');
+}
+
 if (sequenceSection) {
   const observer = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
@@ -230,6 +244,21 @@ if (sequenceSection) {
   }, { threshold: 0.25 });
 
   observer.observe(sequenceSection);
+}
+
+// Observa o Hero: quando fica visível novamente (scroll para cima),
+// reinicia a animação — mas só se ela já tiver corrido antes
+const heroEl = document.querySelector('.hero-scene');
+if (heroEl) {
+  const heroObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting && sequencePlayed) {
+        resetSequence();
+      }
+    });
+  }, { threshold: 0.2 });
+
+  heroObserver.observe(heroEl);
 }
 
 // -------------------------------------
