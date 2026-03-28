@@ -117,6 +117,33 @@
         </section>
     </div>
     
+    <!-- ARTIST MODAL OVERLAY -->
+    <div class="artist-modal" id="artist-modal" aria-hidden="true" role="dialog" aria-modal="true">
+        <div class="artist-modal__backdrop" id="modal-backdrop"></div>
+        <div class="artist-modal__panel">
+            <!-- ESQUERDA: info editorial -->
+            <div class="artist-modal__left">
+                <p class="artist-modal__label" id="modal-label"></p>
+                <h2 class="artist-modal__headline" id="modal-headline"></h2>
+                <nav class="artist-modal__links">
+                    <a class="artist-modal__navlink" href="#" id="modal-link-listen">
+                        <span class="navlink-prefix">Ouvir </span><strong class="navlink-name"></strong><span class="navlink-suffix"> agora</span>
+                    </a>
+                    <a class="artist-modal__navlink" href="#" id="modal-link-albums">
+                        <span class="navlink-prefix">Álbuns de </span><strong class="navlink-name"></strong>
+                    </a>
+                </nav>
+                <a class="artist-modal__cta" href="#">Ouvir agora</a>
+            </div>
+            <!-- DIREITA: foto grande -->
+            <div class="artist-modal__photo">
+                <img src="" alt="" class="artist-modal__img" id="modal-img" />
+            </div>
+            <!-- FECHAR -->
+            <button class="artist-modal__close" id="modal-close" aria-label="Fechar">✕</button>
+        </div>
+    </div>
+
     <script type="module" src="./main.js"></script>
 </body>
 </html>

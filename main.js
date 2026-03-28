@@ -3,18 +3,18 @@ import './style.css';
 console.log('Sizzer 3D Carousel Initializing...');
 
 const baseArtists = [
-  { name: 'The Beatles', label: 'CAPITOL RECORDS [LEGACY]', src: 'https://images.unsplash.com/photo-1593697821252-0c9137d9fc45?auto=format&fit=crop&q=80&w=600' },
-  { name: 'NF', label: 'CAPITOL RECORDS / CCMG', src: 'https://images.unsplash.com/photo-1506157786151-b8491531f063?auto=format&fit=crop&q=80&w=600' },
-  { name: 'Niall Horan', label: 'CAPITOL RECORDS', src: 'https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?auto=format&fit=crop&q=80&w=600' },
-  { name: 'Alessia Cara', label: 'DEF JAM', src: 'https://images.unsplash.com/photo-1513258496099-48166d281d2f?auto=format&fit=crop&q=80&w=600' },
-  { name: 'Halsey', label: 'CAPITOL RECORDS', src: 'https://images.unsplash.com/photo-1525207797960-e41da98ecfb0?auto=format&fit=crop&q=80&w=600' },
-  { name: 'Katy Perry', label: 'CAPITOL RECORDS', src: 'https://images.unsplash.com/photo-1501386761578-eac5c94b800a?auto=format&fit=crop&q=80&w=600' },
-  { name: 'Sam Smith', label: 'CAPITOL RECORDS', src: 'https://images.unsplash.com/photo-1520638062013-108bb67fc9b4?auto=format&fit=crop&q=80&w=600' },
-  { name: 'Troye Sivan', label: 'EMI MUSIC', src: 'https://images.unsplash.com/photo-1493225457124-a1a2a5f5f458?auto=format&fit=crop&q=80&w=600' },
-  { name: 'Maggie Rogers', label: 'CAPITOL RECORDS', src: 'https://images.unsplash.com/photo-1516280440504-45ea0fcb5cbc?auto=format&fit=crop&q=80&w=600' },
-  { name: 'Lewis Capaldi', label: 'CAPITOL RECORDS', src: 'https://images.unsplash.com/photo-1493106819501-66d381c466f1?auto=format&fit=crop&q=80&w=600' },
-  { name: 'Fletcher', label: 'CAPITOL RECORDS', src: 'https://images.unsplash.com/photo-1470225620780-dba8ba36b745?auto=format&fit=crop&q=80&w=600' },
-  { name: 'Paul McCartney', label: 'MPL COMMUNICATIONS', src: 'https://images.unsplash.com/photo-1549419163-fdf9d1cf324c?auto=format&fit=crop&q=80&w=600' }
+  { name: 'The Beatles', label: 'CAPITOL RECORDS [LEGACY]', tagline: 'O som que mudou o mundo para sempre', src: 'https://images.unsplash.com/photo-1593697821252-0c9137d9fc45?auto=format&fit=crop&q=80&w=600', photo: 'https://images.unsplash.com/photo-1593697821252-0c9137d9fc45?auto=format&fit=crop&q=85&w=1000&h=1200' },
+  { name: 'NF', label: 'CAPITOL RECORDS / CCMG', tagline: 'Hip-hop que faz a mente pensar alto', src: 'https://images.unsplash.com/photo-1506157786151-b8491531f063?auto=format&fit=crop&q=80&w=600', photo: 'https://images.unsplash.com/photo-1506157786151-b8491531f063?auto=format&fit=crop&q=85&w=1000&h=1200' },
+  { name: 'Niall Horan', label: 'CAPITOL RECORDS', tagline: 'Pop com alma que toca o coração', src: 'https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?auto=format&fit=crop&q=80&w=600', photo: 'https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?auto=format&fit=crop&q=85&w=1000&h=1200' },
+  { name: 'Alessia Cara', label: 'DEF JAM', tagline: 'Voz autêntica de uma geração inteira', src: 'https://images.unsplash.com/photo-1513258496099-48166d281d2f?auto=format&fit=crop&q=80&w=600', photo: 'https://images.unsplash.com/photo-1513258496099-48166d281d2f?auto=format&fit=crop&q=85&w=1000&h=1200' },
+  { name: 'Halsey', label: 'CAPITOL RECORDS', tagline: 'Arte sem filtros, emoção pura e crua', src: 'https://images.unsplash.com/photo-1525207797960-e41da98ecfb0?auto=format&fit=crop&q=80&w=600', photo: 'https://images.unsplash.com/photo-1525207797960-e41da98ecfb0?auto=format&fit=crop&q=85&w=1000&h=1200' },
+  { name: 'Katy Perry', label: 'CAPITOL RECORDS', tagline: 'Energia que incendeia qualquer palco', src: 'https://images.unsplash.com/photo-1501386761578-eac5c94b800a?auto=format&fit=crop&q=80&w=600', photo: 'https://images.unsplash.com/photo-1501386761578-eac5c94b800a?auto=format&fit=crop&q=85&w=1000&h=1200' },
+  { name: 'Sam Smith', label: 'CAPITOL RECORDS', tagline: 'Cada nota conta uma história única', src: 'https://images.unsplash.com/photo-1520638062013-108bb67fc9b4?auto=format&fit=crop&q=80&w=600', photo: 'https://images.unsplash.com/photo-1520638062013-108bb67fc9b4?auto=format&fit=crop&q=85&w=1000&h=1200' },
+  { name: 'Troye Sivan', label: 'EMI MUSIC', tagline: 'Pop alternativo com visão de futuro', src: 'https://images.unsplash.com/photo-1493225457124-a1a2a5f5f458?auto=format&fit=crop&q=80&w=600', photo: 'https://images.unsplash.com/photo-1493225457124-a1a2a5f5f458?auto=format&fit=crop&q=85&w=1000&h=1200' },
+  { name: 'Maggie Rogers', label: 'CAPITOL RECORDS', tagline: 'Folk e electrónica em perfeita harmonia', src: 'https://images.unsplash.com/photo-1516280440504-45ea0fcb5cbc?auto=format&fit=crop&q=80&w=600', photo: 'https://images.unsplash.com/photo-1516280440504-45ea0fcb5cbc?auto=format&fit=crop&q=85&w=1000&h=1200' },
+  { name: 'Lewis Capaldi', label: 'CAPITOL RECORDS', tagline: 'Alma escocesa que emociona o planeta', src: 'https://images.unsplash.com/photo-1493106819501-66d381c466f1?auto=format&fit=crop&q=80&w=600', photo: 'https://images.unsplash.com/photo-1493106819501-66d381c466f1?auto=format&fit=crop&q=85&w=1000&h=1200' },
+  { name: 'Fletcher', label: 'CAPITOL RECORDS', tagline: 'Pop visceral com letras que partem o peito', src: 'https://images.unsplash.com/photo-1470225620780-dba8ba36b745?auto=format&fit=crop&q=80&w=600', photo: 'https://images.unsplash.com/photo-1470225620780-dba8ba36b745?auto=format&fit=crop&q=85&w=1000&h=1200' },
+  { name: 'Paul McCartney', label: 'MPL COMMUNICATIONS', tagline: 'Uma lenda viva que nunca deixa de criar', src: 'https://images.unsplash.com/photo-1549419163-fdf9d1cf324c?auto=format&fit=crop&q=80&w=600', photo: 'https://images.unsplash.com/photo-1549419163-fdf9d1cf324c?auto=format&fit=crop&q=85&w=1000&h=1200' }
 ];
 
 // Duplicamos o array de base para 24 itens, criando o diâmetro largo exigido.
@@ -53,7 +53,13 @@ artists.forEach((artist) => {
   info.appendChild(p);
   cell.appendChild(img);
   cell.appendChild(info);
-  
+
+  // Clique abre o modal (ignorado se foi um drag)
+  cell.addEventListener('click', () => {
+    if (dragMoved) return;
+    openArtistModal(artist);
+  });
+
   carousel.appendChild(cell);
 });
 
@@ -106,8 +112,11 @@ function animate(time) {
 requestAnimationFrame(animate);
 
 // Interações
+let dragMoved = false;
+
 document.addEventListener('mousedown', (e) => {
   isDragging = true;
+  dragMoved = false;
   startX = e.clientX;
   angleStart = currentAngle;
   document.body.style.cursor = 'grabbing';
@@ -116,6 +125,7 @@ document.addEventListener('mousedown', (e) => {
 document.addEventListener('mousemove', (e) => {
   if (!isDragging) return;
   const dx = e.clientX - startX;
+  if (Math.abs(dx) > 6) dragMoved = true;
   currentAngle = angleStart + (dx * 0.2); 
 });
 
@@ -129,6 +139,7 @@ document.addEventListener('mouseleave', stopDrag);
 
 document.addEventListener('touchstart', (e) => {
   isDragging = true;
+  dragMoved = false;
   startX = e.touches[0].clientX;
   angleStart = currentAngle;
 }, { passive: true });
@@ -136,10 +147,46 @@ document.addEventListener('touchstart', (e) => {
 document.addEventListener('touchmove', (e) => {
   if (!isDragging) return;
   const dx = e.touches[0].clientX - startX;
+  if (Math.abs(dx) > 6) dragMoved = true;
   currentAngle = angleStart + (dx * 0.25);
 }, { passive: true });
 
 document.addEventListener('touchend', stopDrag);
+
+// ================================================
+// ARTIST MODAL — abrir/fechar com animação suave
+// ================================================
+const artistModal    = document.getElementById('artist-modal');
+const modalBackdrop  = document.getElementById('modal-backdrop');
+const modalCloseBtn  = document.getElementById('modal-close');
+const modalHeadline  = document.getElementById('modal-headline');
+const modalLabelEl   = document.getElementById('modal-label');
+const modalImg       = document.getElementById('modal-img');
+const modalNameEls   = artistModal?.querySelectorAll('.navlink-name');
+
+function openArtistModal(artist) {
+  if (!artistModal) return;
+  modalLabelEl.textContent   = artist.label;
+  modalHeadline.textContent  = artist.tagline;
+  modalImg.src               = artist.photo;
+  modalImg.alt               = artist.name;
+  modalNameEls?.forEach(el => (el.textContent = artist.name));
+
+  artistModal.classList.add('is-open');
+  artistModal.setAttribute('aria-hidden', 'false');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeArtistModal() {
+  if (!artistModal) return;
+  artistModal.classList.remove('is-open');
+  artistModal.setAttribute('aria-hidden', 'true');
+  document.body.style.overflow = '';
+}
+
+modalBackdrop?.addEventListener('click', closeArtistModal);
+modalCloseBtn?.addEventListener('click', closeArtistModal);
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeArtistModal(); });
 
 // Animação de Entrada Premium (Revealing UI Elements de forma fluída)
 function triggerEntrance() {

@@ -843,3 +843,222 @@ body {
     margin-top: 3rem;
   }
 }
+
+/* ================================================================
+   ARTIST MODAL OVERLAY
+   ================================================================ */
+
+.artist-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 900;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.artist-modal.is-open {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+/* Backdrop: transparente com leve blur — carrossel visível por baixo */
+.artist-modal__backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.55);
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
+}
+
+/* Panel principal: ocupa toda a tela, entra com slide suave */
+.artist-modal__panel {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  overflow: hidden;
+  transform: translateY(32px) scale(0.985);
+  opacity: 0;
+  transition:
+    transform 0.55s cubic-bezier(0.16, 1, 0.3, 1),
+    opacity   0.45s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.artist-modal.is-open .artist-modal__panel {
+  transform: translateY(0) scale(1);
+  opacity: 1;
+}
+
+/* ---- LADO ESQUERDO — info editorial ---- */
+.artist-modal__left {
+  flex: 0 0 clamp(280px, 38%, 520px);
+  background: #000;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: clamp(2rem, 6vw, 5rem) clamp(1.5rem, 4vw, 4rem);
+  position: relative;
+  z-index: 2;
+}
+
+.artist-modal__label {
+  font-family: 'Poppins', sans-serif;
+  font-size: clamp(0.6rem, 1vw, 0.8rem);
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #777;
+  margin: 0 0 1.2rem;
+}
+
+.artist-modal__headline {
+  font-family: 'Poppins', sans-serif;
+  font-size: clamp(1.5rem, 3.5vw, 3rem);
+  font-weight: 700;
+  color: #fff;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  margin: 0 0 clamp(2rem, 4vw, 3.5rem);
+}
+
+/* Links de navegação do artista */
+.artist-modal__links {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.artist-modal__navlink {
+  font-family: 'Poppins', sans-serif;
+  font-size: clamp(0.82rem, 1.4vw, 1.05rem);
+  font-weight: 400;
+  color: #ccc;
+  text-decoration: none;
+  padding: clamp(0.9rem, 1.5vw, 1.2rem) 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  display: block;
+  transition: color 0.25s ease, padding-left 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.artist-modal__navlink strong {
+  color: #fff;
+  font-weight: 700;
+}
+
+.artist-modal__navlink:hover {
+  color: #fff;
+  padding-left: 0.6rem;
+}
+
+/* CTA — "Ouvir agora" no fundo */
+.artist-modal__cta {
+  display: inline-block;
+  margin-top: clamp(2rem, 4vw, 3rem);
+  font-family: 'Poppins', sans-serif;
+  font-size: clamp(0.75rem, 1.1vw, 0.9rem);
+  font-weight: 400;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: #fff;
+  text-decoration: underline;
+  text-underline-offset: 6px;
+  text-decoration-color: rgba(255, 255, 255, 0.5);
+  transition: text-decoration-color 0.25s ease;
+}
+
+.artist-modal__cta:hover {
+  text-decoration-color: #fff;
+}
+
+/* ---- LADO DIREITO — foto grande ---- */
+.artist-modal__photo {
+  flex: 1;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Gradiente para fundir suavemente com o painel esquerdo */
+.artist-modal__photo::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  left: 0;
+  width: 18%;
+  background: linear-gradient(to right, #000 0%, transparent 100%);
+  z-index: 1;
+  pointer-events: none;
+}
+
+.artist-modal__img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center top;
+  display: block;
+  transform: scale(1.04);
+  transition: transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.artist-modal.is-open .artist-modal__img {
+  transform: scale(1);
+}
+
+/* ---- BOTÃO FECHAR ---- */
+.artist-modal__close {
+  position: absolute;
+  top: clamp(1rem, 2.5vw, 1.8rem);
+  right: clamp(1rem, 2.5vw, 1.8rem);
+  width: 44px;
+  height: 44px;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 50%;
+  color: #fff;
+  font-size: 1.1rem;
+  cursor: pointer;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition:
+    background 0.25s ease,
+    border-color 0.25s ease,
+    transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.artist-modal__close:hover {
+  background: rgba(255, 255, 255, 0.18);
+  border-color: rgba(255, 255, 255, 0.4);
+  transform: rotate(90deg) scale(1.08);
+}
+
+/* ---- RESPONSIVO MOBILE ---- */
+@media (max-width: 767px) {
+  .artist-modal__panel {
+    flex-direction: column;
+  }
+
+  .artist-modal__left {
+    flex: 0 0 auto;
+    padding: 3.5rem 1.5rem 2rem;
+    justify-content: flex-end;
+  }
+
+  .artist-modal__photo {
+    flex: 1;
+    order: -1; /* foto em cima no mobile */
+    min-height: 45vh;
+  }
+
+  .artist-modal__photo::before {
+    width: 0;
+    background: linear-gradient(to bottom, transparent 60%, #000 100%);
+    width: 100%;
+    height: 100%;
+  }
+
+  .artist-modal__headline {
+    font-size: clamp(1.2rem, 5.5vw, 2rem);
+  }
+}
