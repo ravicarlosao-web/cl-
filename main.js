@@ -230,7 +230,7 @@ if (sequenceSection) {
 }
 
 // -------------------------------------
-// CARD HOVER → FUNDO DINÂMICO + TEXTO ANIMADO
+// CARD HOVER → FUNDO DINÂMICO + TEXTO ANIMADO PALAVRA A PALAVRA
 // -------------------------------------
 
 const cardWrappers = document.querySelectorAll('.cards-grid .card-wrapper');
@@ -249,25 +249,67 @@ const cardData = [
   { label: 'BELO — MAPUTO',        date: '24.06.2026' },
 ];
 
+// Constrói word-spans dentro de um tray, já no estado inicial (visible ou hidden)
+function buildWords(tray, text, visible) {
+  tray.innerHTML = '';
+  const words = text ? text.split(' ').filter(Boolean) : [];
+  words.forEach(word => {
+    const w = document.createElement('span');
+    w.className = 'slot-word';
+    w.textContent = word;
+    w.style.transform = visible ? 'translateY(0)' : 'translateY(-70%)';
+    w.style.opacity   = visible ? '1' : '0';
+    tray.appendChild(w);
+  });
+}
+
+// Anima as palavras de um tray para dentro (entrando de cima para baixo)
+function animateWordsIn(tray, stagger = 0.07) {
+  tray.querySelectorAll('.slot-word').forEach((w, i) => {
+    w.style.transition = 'none';
+    w.style.transform  = 'translateY(-70%)';
+    w.style.opacity    = '0';
+    void w.offsetWidth;
+    w.style.transition = `transform 0.6s cubic-bezier(0.16,1,0.3,1) ${i * stagger}s, opacity 0.5s ease ${i * stagger}s`;
+    w.style.transform  = 'translateY(0)';
+    w.style.opacity    = '1';
+  });
+}
+
+// Anima as palavras de um tray para fora (saindo para baixo)
+function animateWordsOut(tray, stagger = 0.05) {
+  tray.querySelectorAll('.slot-word').forEach((w, i) => {
+    w.style.transition = `transform 0.45s cubic-bezier(0.4,0,0.6,1) ${i * stagger}s, opacity 0.35s ease ${i * stagger}s`;
+    w.style.transform  = 'translateY(70%)';
+    w.style.opacity    = '0';
+  });
+}
+
+// Troca o texto de um slot com animação de palavras
 function animateSlot(slot, newText) {
   if (!slot) return;
-  const visible = slot.querySelector('.visible');
-  const hidden  = slot.querySelector('.above, .below');
-  if (!visible || !hidden) return;
+  const trays  = slot.querySelectorAll('.tray');
+  const active = Array.from(trays).find(t => t.dataset.active === 'true');
+  const next   = Array.from(trays).find(t => t.dataset.active === 'false');
+  if (!active || !next) return;
 
-  hidden.textContent = newText;
+  buildWords(next, newText, false);
+  next.dataset.active   = 'true';
+  active.dataset.active = 'false';
 
-  hidden.classList.remove('above', 'below');
-  hidden.classList.add('above');
-
-  void hidden.offsetWidth;
-
-  visible.classList.remove('visible');
-  visible.classList.add('below');
-
-  hidden.classList.remove('above');
-  hidden.classList.add('visible');
+  animateWordsOut(active);
+  animateWordsIn(next);
 }
+
+// Inicializa o texto padrão sem animação
+function initSlot(slot, text) {
+  if (!slot) return;
+  const active = slot.querySelector('[data-active="true"]');
+  if (active) buildWords(active, text, true);
+}
+
+initSlot(labelSlot, DEFAULT_LABEL);
+initSlot(dateSlot,  DEFAULT_DATE);
 
 cardWrappers.forEach((card, index) => {
   card.addEventListener('mouseenter', () => {
