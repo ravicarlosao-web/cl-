@@ -99,7 +99,11 @@
     <div class="artist-modal" id="artist-modal" aria-hidden="true" role="dialog" aria-modal="true">
         <!-- LEFT: escuro sobre o carrossel, com texto do artista -->
         <div class="artist-modal__left" id="modal-left">
-            <h2 class="artist-modal__headline" id="modal-headline"></h2>
+            <!-- traço + nome do artista em vez do título grande -->
+            <div class="artist-modal__nameblock">
+                <div class="artist-modal__trac"></div>
+                <p class="artist-modal__name" id="modal-name"></p>
+            </div>
             <div class="artist-modal__spacer"></div>
             <nav class="artist-modal__links">
                 <a class="artist-modal__navlink" href="#" id="modal-link-listen">

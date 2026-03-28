@@ -177,14 +177,14 @@ heroScene.addEventListener('click', (e) => {
 // ARTIST MODAL — abrir/fechar com animação suave
 // ================================================
 const artistModal   = document.getElementById('artist-modal');
-const modalHeadline = document.getElementById('modal-headline');
+const modalName     = document.getElementById('modal-name');
 const modalPhoto    = document.getElementById('modal-photo');
 const modalLeft     = document.getElementById('modal-left');
 const modalNameEls  = artistModal?.querySelectorAll('.navlink-name');
 
 function openArtistModal(artist) {
   if (!artistModal) return;
-  modalHeadline.textContent            = artist.tagline;
+  modalName.textContent                = artist.name;
   modalPhoto.style.backgroundImage     = `url(${artist.photo})`;
   modalNameEls?.forEach(el => (el.textContent = artist.name));
 

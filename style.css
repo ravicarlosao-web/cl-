@@ -892,14 +892,26 @@ body {
   cursor: default;
 }
 
-/* Tagline grande no topo */
-.artist-modal__headline {
+/* Traço + nome do artista no topo (substitui o título grande) */
+.artist-modal__nameblock {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(0.6rem, 1.2vh, 1rem);
+}
+
+.artist-modal__trac {
+  width: clamp(36px, 4.5vw, 56px);
+  height: 2px;
+  background: #fff;
+}
+
+.artist-modal__name {
   font-family: 'Poppins', sans-serif;
-  font-size: clamp(1.8rem, 3.8vw, 3.5rem);
-  font-weight: 800;
+  font-size: clamp(1.4rem, 2.8vw, 2.4rem);
+  font-weight: 700;
   color: #fff;
-  line-height: 1.08;
-  letter-spacing: -0.03em;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
   margin: 0;
 }
 
@@ -1005,7 +1017,7 @@ body {
     transform: translateY(0);
   }
 
-  .artist-modal__headline {
-    font-size: clamp(1.4rem, 6vw, 2.2rem);
+  .artist-modal__name {
+    font-size: clamp(1.2rem, 5.5vw, 1.8rem);
   }
 }
