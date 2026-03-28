@@ -547,6 +547,15 @@ body {
   cursor: grabbing;
 }
 
+/* Overlay invisível que garante clique em qualquer ponto do card */
+.card-click-zone {
+  position: absolute;
+  inset: 0;
+  z-index: 20;
+  cursor: pointer;
+  background: transparent;
+}
+
 /* Física de Entrada Individual Premium e Ágil (Drop Cascading) */
 .carousel-cell .card-image {
   opacity: 0;

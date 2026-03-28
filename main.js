@@ -54,17 +54,23 @@ artists.forEach((artist) => {
   cell.appendChild(img);
   cell.appendChild(info);
 
+  // Overlay invisível que cobre TODO o card — garante clique em qualquer ponto
+  const clickZone = document.createElement('div');
+  clickZone.className = 'card-click-zone';
+  cell.appendChild(clickZone);
+
   // Clique vs. drag/segurar: tempo + distância
   let pdownX = 0, pdownY = 0, pdownTime = 0;
-  cell.addEventListener('pointerdown', (e) => {
+  clickZone.addEventListener('pointerdown', (e) => {
     pdownX = e.clientX;
     pdownY = e.clientY;
     pdownTime = Date.now();
   });
-  cell.addEventListener('click', (e) => {
-    const held = Date.now() - pdownTime;      // tempo em ms que o botão ficou pressionado
+  clickZone.addEventListener('click', (e) => {
+    e.stopPropagation();
+    const held = Date.now() - pdownTime;
     const dist = Math.hypot(e.clientX - pdownX, e.clientY - pdownY);
-    if (held > 500 || dist > 12) return;      // segurou (drag) → ignora; clique rápido → abre
+    if (held > 500 || dist > 12) return;
     openArtistModal(artist);
   });
 
