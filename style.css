@@ -855,13 +855,18 @@ body {
 }
 
 /* ================================================================
-   ARTIST MODAL OVERLAY
+   ARTIST DETAIL OVERLAY
+   z-index: 50 — acima do carousel (20) mas abaixo do header (100)
+   Assim a navbar fica visível por cima do overlay sem precisar de
+   alterar o posicionamento do header.
    ================================================================ */
 
 .artist-modal {
   position: fixed;
   inset: 0;
-  z-index: 900;
+  z-index: 50;
+  display: grid;
+  grid-template-columns: 33% 67%;
   pointer-events: none;
   opacity: 0;
   transition: opacity 0.45s cubic-bezier(0.16, 1, 0.3, 1);
@@ -872,63 +877,32 @@ body {
   pointer-events: auto;
 }
 
-/* Backdrop: transparente com leve blur — carrossel visível por baixo */
-.artist-modal__backdrop {
-  position: absolute;
-  inset: 0;
-  background: rgba(0, 0, 0, 0.55);
-  backdrop-filter: blur(5px);
-  -webkit-backdrop-filter: blur(5px);
-}
-
-/* Panel principal: ocupa toda a tela, entra com slide suave */
-.artist-modal__panel {
-  position: absolute;
-  inset: 0;
-  display: flex;
-  overflow: hidden;
-  transform: translateY(32px) scale(0.985);
-  opacity: 0;
-  transition:
-    transform 0.55s cubic-bezier(0.16, 1, 0.3, 1),
-    opacity   0.45s cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-.artist-modal.is-open .artist-modal__panel {
-  transform: translateY(0) scale(1);
-  opacity: 1;
-}
-
-/* ---- LADO ESQUERDO — info editorial ---- */
+/* ── PAINEL ESQUERDO ──
+   Overlay escuro semitransparente sobre o carrossel (que fica visível
+   por baixo). O texto flui de cima para baixo: tagline → espaço → links → CTA */
 .artist-modal__left {
-  flex: 0 0 clamp(280px, 38%, 520px);
-  background: #000;
+  position: relative;
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  padding: clamp(2rem, 6vw, 5rem) clamp(1.5rem, 4vw, 4rem);
-  position: relative;
-  z-index: 2;
+  padding: clamp(68px, 10vh, 96px) clamp(1.5rem, 3.5vw, 3rem) clamp(2rem, 5vh, 4rem);
+  background: rgba(0, 0, 0, 0.78);
+  cursor: default;
 }
 
-.artist-modal__label {
-  font-family: 'Poppins', sans-serif;
-  font-size: clamp(0.6rem, 1vw, 0.8rem);
-  font-weight: 500;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  color: #777;
-  margin: 0 0 1.2rem;
-}
-
+/* Tagline grande no topo */
 .artist-modal__headline {
   font-family: 'Poppins', sans-serif;
-  font-size: clamp(1.5rem, 3.5vw, 3rem);
-  font-weight: 700;
+  font-size: clamp(1.8rem, 3.8vw, 3.5rem);
+  font-weight: 800;
   color: #fff;
-  line-height: 1.1;
-  letter-spacing: -0.02em;
-  margin: 0 0 clamp(2rem, 4vw, 3.5rem);
+  line-height: 1.08;
+  letter-spacing: -0.03em;
+  margin: 0;
+}
+
+/* Espaço elástico entre a tagline e os links */
+.artist-modal__spacer {
+  flex: 1;
 }
 
 /* Links de navegação do artista */
@@ -936,44 +910,38 @@ body {
   display: flex;
   flex-direction: column;
   gap: 0;
-  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  margin-bottom: clamp(1.2rem, 3.5vh, 2.5rem);
 }
 
 .artist-modal__navlink {
   font-family: 'Poppins', sans-serif;
-  font-size: clamp(0.82rem, 1.4vw, 1.05rem);
+  font-size: clamp(0.88rem, 1.55vw, 1.1rem);
   font-weight: 400;
-  color: #ccc;
-  text-decoration: none;
-  padding: clamp(0.9rem, 1.5vw, 1.2rem) 0;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-  display: block;
-  transition: color 0.25s ease, padding-left 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-.artist-modal__navlink strong {
   color: #fff;
-  font-weight: 700;
+  text-decoration: none;
+  padding: 0.22rem 0;
+  display: block;
+  transition: opacity 0.2s ease;
 }
 
 .artist-modal__navlink:hover {
-  color: #fff;
-  padding-left: 0.6rem;
+  opacity: 0.7;
 }
 
-/* CTA — "Ouvir agora" no fundo */
+.artist-modal__navlink strong {
+  font-weight: 700;
+}
+
+/* CTA "Ouvir agora" fixo no fundo */
 .artist-modal__cta {
-  display: inline-block;
-  margin-top: clamp(2rem, 4vw, 3rem);
   font-family: 'Poppins', sans-serif;
   font-size: clamp(0.75rem, 1.1vw, 0.9rem);
   font-weight: 400;
-  letter-spacing: 0.05em;
-  text-transform: uppercase;
   color: #fff;
   text-decoration: underline;
   text-underline-offset: 6px;
-  text-decoration-color: rgba(255, 255, 255, 0.5);
+  text-decoration-color: rgba(255, 255, 255, 0.55);
+  cursor: pointer;
   transition: text-decoration-color 0.25s ease;
 }
 
@@ -981,94 +949,51 @@ body {
   text-decoration-color: #fff;
 }
 
-/* ---- LADO DIREITO — foto grande ---- */
+/* ── PAINEL DIREITO — foto grande ──
+   Desliza da direita ao abrir. Clicar fecha o modal. */
 .artist-modal__photo {
-  flex: 1;
-  position: relative;
-  overflow: hidden;
-}
-
-/* Gradiente para fundir suavemente com o painel esquerdo */
-.artist-modal__photo::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  left: 0;
-  width: 18%;
-  background: linear-gradient(to right, #000 0%, transparent 100%);
-  z-index: 1;
-  pointer-events: none;
-}
-
-.artist-modal__img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  object-position: center top;
-  display: block;
-  transform: scale(1.04);
-  transition: transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-.artist-modal.is-open .artist-modal__img {
-  transform: scale(1);
-}
-
-/* ---- BOTÃO FECHAR ---- */
-.artist-modal__close {
-  position: absolute;
-  top: clamp(1rem, 2.5vw, 1.8rem);
-  right: clamp(1rem, 2.5vw, 1.8rem);
-  width: 44px;
-  height: 44px;
-  background: rgba(255, 255, 255, 0.08);
-  border: 1px solid rgba(255, 255, 255, 0.15);
-  border-radius: 50%;
-  color: #fff;
-  font-size: 1.1rem;
-  cursor: pointer;
-  z-index: 10;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  background-size: cover;
+  background-position: center top;
+  transform: translateX(80px);
+  opacity: 0;
   transition:
-    background 0.25s ease,
-    border-color 0.25s ease,
-    transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+    transform 0.6s cubic-bezier(0.16, 1, 0.3, 1),
+    opacity   0.5s cubic-bezier(0.16, 1, 0.3, 1);
+  cursor: pointer;
 }
 
-.artist-modal__close:hover {
-  background: rgba(255, 255, 255, 0.18);
-  border-color: rgba(255, 255, 255, 0.4);
-  transform: rotate(90deg) scale(1.08);
+.artist-modal.is-open .artist-modal__photo {
+  transform: translateX(0);
+  opacity: 1;
 }
 
-/* ---- RESPONSIVO MOBILE ---- */
+/* ── MOBILE ── */
 @media (max-width: 767px) {
-  .artist-modal__panel {
-    flex-direction: column;
+  .artist-modal {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto 1fr;
   }
 
   .artist-modal__left {
-    flex: 0 0 auto;
-    padding: 3.5rem 1.5rem 2rem;
-    justify-content: flex-end;
+    padding-top: clamp(68px, 12vh, 90px);
+    padding-bottom: 2rem;
+  }
+
+  .artist-modal__spacer {
+    flex: 0;
+    min-height: 2rem;
   }
 
   .artist-modal__photo {
-    flex: 1;
-    order: -1; /* foto em cima no mobile */
+    transform: translateY(50px);
     min-height: 45vh;
   }
 
-  .artist-modal__photo::before {
-    width: 0;
-    background: linear-gradient(to bottom, transparent 60%, #000 100%);
-    width: 100%;
-    height: 100%;
+  .artist-modal.is-open .artist-modal__photo {
+    transform: translateY(0);
   }
 
   .artist-modal__headline {
-    font-size: clamp(1.2rem, 5.5vw, 2rem);
+    font-size: clamp(1.4rem, 6vw, 2.2rem);
   }
 }

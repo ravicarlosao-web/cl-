@@ -4,7 +4,6 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Sizzer | Independent Music Agency</title>
-    <!-- Importing modern premium font -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
@@ -12,12 +11,10 @@
 </head>
 <body>
     <div class="site-wrapper">
-        <!-- HEADER (Kept Exactly As Asked) -->
         <header class="header">
             <div class="logo">
                 <h1>SIZZER</h1>
             </div>
-            
             <button class="mobile-toggle" id="mobile-menu-btn" aria-label="Menu" type="button">
                 <span class="bar"></span>
                 <span class="bar"></span>
@@ -30,31 +27,19 @@
             </nav>
         </header>
 
-        <!-- 3D HERO SCENE -->
         <main class="hero-scene">
-            <div class="carousel" id="carousel">
-                <!-- Javascript will populate the 3D Cells here dynamically -->
-            </div>
-            
-            <!-- Radial overlay gradients to hide edge abruptions -->
+            <div class="carousel" id="carousel"></div>
             <div class="scene-overlay left-fade"></div>
             <div class="scene-overlay right-fade"></div>
-            
         </main>
 
-        <!-- SEÇÃO SCROLL SEQUENCE (STATEMENT -> 3 CARDS) -->
         <section class="scroll-sequence-wrapper" id="experiencia">
             <div class="scroll-sequence-sticky">
-
-                <!-- Fundos que aparecem no hover de cada card -->
                 <div class="section-bg">
                     <div class="bg-layer" data-card="1" style="background-image: url('./images/card1-bg.jpg')"></div>
                     <div class="bg-layer" data-card="2" style="background-image: url('./images/card2-bg.jpg')"></div>
                     <div class="bg-layer" data-card="3" style="background-image: url('./images/card3.jpg')"></div>
                 </div>
-            
-
-                <!-- CAMADA 1: STATEMENT COLOSSAL -->
                 <div class="statement-container cinematic-text">
                     <div class="line-container">
                         <h2 class="massive-text">VENHA</h2>
@@ -74,8 +59,6 @@
                         <h2 class="massive-text">UNICA COM <span class="text-red">CLÉ</span></h2>
                     </div>
                 </div>
-
-                <!-- CAMADA 2: AGENDA DE SHOW — 3 CARDS IMAGEM -->
                 <div class="three-cards-container">
                     <div class="label-bar section-label">
                         <div class="label-slot">
@@ -88,21 +71,18 @@
                         </div>
                     </div>
                     <div class="cards-grid">
-                        <!-- Card 1: Trap La Vida - Onde Viemos -->
                         <div class="card-wrapper">
                             <div class="event-card">
                                 <img src="./images/card1.jpg" alt="Trap La Vida - Onde Viemos">
                             </div>
                             <a class="buy-ticket" href="#">COMPRAR INGRESSO</a>
                         </div>
-                        <!-- Card 2: Performer -->
                         <div class="card-wrapper">
                             <div class="event-card">
                                 <img src="./images/card2.jpg" alt="Performer">
                             </div>
                             <a class="buy-ticket" href="#">COMPRAR INGRESSO</a>
                         </div>
-                        <!-- Card 3: Belo - Maputo, Moçambique -->
                         <div class="card-wrapper">
                             <div class="event-card">
                                 <img src="./images/card3.jpg" alt="Belo - Maputo Moçambique">
@@ -111,37 +91,28 @@
                         </div>
                     </div>
                 </div>
-
-
             </div>
         </section>
     </div>
-    
-    <!-- ARTIST MODAL OVERLAY -->
+
+    <!-- ARTIST DETAIL OVERLAY -->
     <div class="artist-modal" id="artist-modal" aria-hidden="true" role="dialog" aria-modal="true">
-        <div class="artist-modal__backdrop" id="modal-backdrop"></div>
-        <div class="artist-modal__panel">
-            <!-- ESQUERDA: info editorial -->
-            <div class="artist-modal__left">
-                <p class="artist-modal__label" id="modal-label"></p>
-                <h2 class="artist-modal__headline" id="modal-headline"></h2>
-                <nav class="artist-modal__links">
-                    <a class="artist-modal__navlink" href="#" id="modal-link-listen">
-                        <span class="navlink-prefix">Ouvir </span><strong class="navlink-name"></strong><span class="navlink-suffix"> agora</span>
-                    </a>
-                    <a class="artist-modal__navlink" href="#" id="modal-link-albums">
-                        <span class="navlink-prefix">Álbuns de </span><strong class="navlink-name"></strong>
-                    </a>
-                </nav>
-                <a class="artist-modal__cta" href="#">Ouvir agora</a>
-            </div>
-            <!-- DIREITA: foto grande -->
-            <div class="artist-modal__photo">
-                <img src="" alt="" class="artist-modal__img" id="modal-img" />
-            </div>
-            <!-- FECHAR -->
-            <button class="artist-modal__close" id="modal-close" aria-label="Fechar">✕</button>
+        <!-- LEFT: escuro sobre o carrossel, com texto do artista -->
+        <div class="artist-modal__left" id="modal-left">
+            <h2 class="artist-modal__headline" id="modal-headline"></h2>
+            <div class="artist-modal__spacer"></div>
+            <nav class="artist-modal__links">
+                <a class="artist-modal__navlink" href="#" id="modal-link-listen">
+                    <span>Ouvir </span><strong class="navlink-name"></strong><span> agora</span>
+                </a>
+                <a class="artist-modal__navlink" href="#" id="modal-link-albums">
+                    <span>Albuns do </span><strong class="navlink-name"></strong>
+                </a>
+            </nav>
+            <a class="artist-modal__cta" href="#">Ouvir agora</a>
         </div>
+        <!-- RIGHT: foto grande do artista, clique para fechar -->
+        <div class="artist-modal__photo" id="modal-photo"></div>
     </div>
 
     <script type="module" src="./main.js"></script>

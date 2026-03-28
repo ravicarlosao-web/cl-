@@ -156,6 +156,7 @@ document.addEventListener('touchend', stopDrag);
 const heroScene = document.querySelector('.hero-scene');
 heroScene.addEventListener('click', (e) => {
   if (dragMoved) return;
+  if (artistModal?.classList.contains('is-open')) return;
 
   // Determina o índice do card mais próximo da frente (ângulo → 0°)
   const cellsArr = [...document.querySelectorAll('.carousel-cell')];
@@ -175,20 +176,16 @@ heroScene.addEventListener('click', (e) => {
 // ================================================
 // ARTIST MODAL — abrir/fechar com animação suave
 // ================================================
-const artistModal    = document.getElementById('artist-modal');
-const modalBackdrop  = document.getElementById('modal-backdrop');
-const modalCloseBtn  = document.getElementById('modal-close');
-const modalHeadline  = document.getElementById('modal-headline');
-const modalLabelEl   = document.getElementById('modal-label');
-const modalImg       = document.getElementById('modal-img');
-const modalNameEls   = artistModal?.querySelectorAll('.navlink-name');
+const artistModal   = document.getElementById('artist-modal');
+const modalHeadline = document.getElementById('modal-headline');
+const modalPhoto    = document.getElementById('modal-photo');
+const modalLeft     = document.getElementById('modal-left');
+const modalNameEls  = artistModal?.querySelectorAll('.navlink-name');
 
 function openArtistModal(artist) {
   if (!artistModal) return;
-  modalLabelEl.textContent   = artist.label;
-  modalHeadline.textContent  = artist.tagline;
-  modalImg.src               = artist.photo;
-  modalImg.alt               = artist.name;
+  modalHeadline.textContent            = artist.tagline;
+  modalPhoto.style.backgroundImage     = `url(${artist.photo})`;
   modalNameEls?.forEach(el => (el.textContent = artist.name));
 
   artistModal.classList.add('is-open');
@@ -203,8 +200,12 @@ function closeArtistModal() {
   document.body.style.overflow = '';
 }
 
-modalBackdrop?.addEventListener('click', closeArtistModal);
-modalCloseBtn?.addEventListener('click', closeArtistModal);
+modalPhoto?.addEventListener('click', closeArtistModal);
+
+modalLeft?.addEventListener('click', (e) => {
+  if (!e.target.closest('a')) closeArtistModal();
+});
+
 document.addEventListener('keydown', e => { if (e.key === 'Escape') closeArtistModal(); });
 
 // Animação de Entrada Premium (Revealing UI Elements de forma fluída)
