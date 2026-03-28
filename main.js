@@ -148,21 +148,28 @@ document.addEventListener('touchmove', (e) => {
 document.addEventListener('touchend', stopDrag);
 
 // ================================================
-// CLIQUE NOS CARDS DO CARROSSEL → abre modal
-// Usa delegação: click borbulha do elemento clicado até ao document.
-// closest('.carousel-cell') identifica o card independente do filho clicado.
-// dragMoved garante que arrastar não abre o modal.
+// CLIQUE NO CARROSSEL → abre modal do card frontal
+// Os eventos de ponteiro no contexto 3D (preserve-3d) passam pelo carousel
+// e aterram no hero-scene. Capturamos aqui e calculamos qual artista
+// está na frente pelo ângulo de rotação atual.
 // ================================================
-document.addEventListener('click', (e) => {
-  const cell = e.target.closest('.carousel-cell');
-  if (!cell || dragMoved) return;
+const heroScene = document.querySelector('.hero-scene');
+heroScene.addEventListener('click', (e) => {
+  if (dragMoved) return;
 
+  // Determina o índice do card mais próximo da frente (ângulo → 0°)
   const cellsArr = [...document.querySelectorAll('.carousel-cell')];
-  const idx      = cellsArr.indexOf(cell);
-  if (idx === -1) return;
+  let frontIdx = 0;
+  let minDelta  = Infinity;
 
-  const artist = artists[idx];
-  if (artist) openArtistModal(artist);
+  cellsArr.forEach((_, i) => {
+    const baseAngle = (360 / cellCount) * i;
+    let eff   = ((baseAngle + currentAngle) % 360 + 360) % 360;
+    let delta = Math.min(eff, 360 - eff);
+    if (delta < minDelta) { minDelta = delta; frontIdx = i; }
+  });
+
+  openArtistModal(artists[frontIdx]);
 });
 
 // ================================================

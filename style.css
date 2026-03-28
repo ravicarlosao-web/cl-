@@ -505,6 +505,7 @@ body {
   flex-grow: 1;
   position: relative;
   width: 100%;
+  cursor: pointer;
   /* Perspective shrinks gracefully on tiny screens handling distortion smoothly */
   perspective: clamp(800px, 80vw, 1200px);
   transform-style: preserve-3d;
