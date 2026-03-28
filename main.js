@@ -190,6 +190,32 @@ const stickyEl         = document.querySelector('.scroll-sequence-sticky');
 
 let sequencePlayed = false;
 
+// Scroll suave com easing personalizado (easeInOutQuart)
+// Muito mais confortável do que o scrollIntoView nativo do browser
+function smoothScrollToCenter(element, duration) {
+  const rect    = element.getBoundingClientRect();
+  const center  = rect.top + rect.height / 2;
+  const target  = window.scrollY + center - window.innerHeight / 2;
+  const startY  = window.scrollY;
+  const dist    = target - startY;
+  const t0      = performance.now();
+
+  function ease(t) {
+    // easeInOutQuart: arranque e travagem muito suaves
+    return t < 0.5
+      ? 8 * t * t * t * t
+      : 1 - Math.pow(-2 * t + 2, 4) / 2;
+  }
+
+  function step(now) {
+    const p = Math.min((now - t0) / duration, 1);
+    window.scrollTo(0, startY + dist * ease(p));
+    if (p < 1) requestAnimationFrame(step);
+  }
+
+  requestAnimationFrame(step);
+}
+
 function playSequence() {
   if (sequencePlayed) return;
   sequencePlayed = true;
@@ -214,10 +240,10 @@ function playSequence() {
   setTimeout(() => {
     if (stickyEl) {
       stickyEl.classList.add('compact');
-      // Centra suavemente a secção no ecrã para toda a experiência ser visível
+      // Centra suavemente a secção com easing personalizado (muito mais confortável)
       setTimeout(() => {
-        stickyEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
-      }, 200);
+        smoothScrollToCenter(stickyEl, 1400);
+      }, 300);
     }
   }, 3100);
 }
