@@ -186,6 +186,7 @@ if (navToggle) {
 const sequenceSection  = document.querySelector('.scroll-sequence-wrapper');
 const cinematicText    = document.querySelector('.cinematic-text');
 const threeCardsEl     = document.querySelector('.three-cards-container');
+const stickyEl         = document.querySelector('.scroll-sequence-sticky');
 
 let sequencePlayed = false;
 
@@ -196,18 +197,26 @@ function playSequence() {
   // 1. Texto entra
   cinematicText.classList.add('text-in');
 
-  // 2. Após 1.7s o texto sai
+  // 2. Após 1.1s o texto sai
   setTimeout(() => {
     cinematicText.classList.remove('text-in');
     cinematicText.classList.add('text-exit');
   }, 1100);
 
-  // 3. Após 2.4s os cards sobem
+  // 3. Após 1.75s os cards sobem
   setTimeout(() => {
     if (threeCardsEl) {
       threeCardsEl.classList.add('cards-in', 'active');
     }
   }, 1750);
+
+  // 4. Após a animação dos cards terminar (~1.75s + 0.9s de transição + 0.28s delay = ~3s),
+  //    contrai a secção para a altura real dos cards
+  setTimeout(() => {
+    if (stickyEl) {
+      stickyEl.classList.add('compact');
+    }
+  }, 3100);
 }
 
 if (sequenceSection) {

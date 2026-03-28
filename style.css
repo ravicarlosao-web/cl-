@@ -71,6 +71,13 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
+  transition: height 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.scroll-sequence-sticky.compact {
+  height: auto;
+  min-height: 0;
+  padding: clamp(3rem, 7vh, 5rem) 0;
 }
 
 /* ---- FUNDO DINÂMICO (hover dos cards) ---- */
