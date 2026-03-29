@@ -895,10 +895,12 @@ body {
 /* Bloco editorial: fundo branco, texto preto — estilo headline de jornal */
 .artist-modal__nameblock {
   display: block;
-  width: 100%;
+  /* Quebra o padding lateral do painel esquerdo e estica até à foto */
+  margin-left: calc(-1 * clamp(1.5rem, 3.5vw, 3rem));
+  width: calc(100% + clamp(1.5rem, 3.5vw, 3rem) + 5vw);
   background: #fff;
-  padding: clamp(0.6rem, 1.5vh, 1rem) clamp(0.8rem, 2vw, 1.4rem);
-  margin-top: clamp(3rem, 9vh, 6rem);
+  padding: clamp(0.6rem, 1.5vh, 1rem) 0 clamp(0.6rem, 1.5vh, 1rem) clamp(1.5rem, 3.5vw, 3rem);
+  margin-top: clamp(4rem, 14vh, 9rem);
 }
 
 .artist-modal__trac {
@@ -908,10 +910,10 @@ body {
 .artist-modal__name {
   font-family: 'Poppins', sans-serif;
   font-size: clamp(1.8rem, 3.8vw, 3.4rem);
-  font-weight: 800;
+  font-weight: 400;
   color: #000;
   line-height: 1.06;
-  letter-spacing: -0.03em;
+  letter-spacing: -0.02em;
   margin: 0;
 }
 
