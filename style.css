@@ -990,9 +990,15 @@ body {
   align-items: center;
   justify-content: center;
   color: #fff;
-  opacity: 0.75;
-  transition: opacity 0.2s ease;
+  opacity: 0;
+  transform: translateY(14px);
   text-decoration: none;
+  transition: opacity 0.2s ease;
+}
+
+.platform-icon.is-visible {
+  opacity: 0.75;
+  transform: translateY(0);
 }
 
 .platform-icon:hover {

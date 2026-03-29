@@ -180,10 +180,11 @@ const artistModal = document.getElementById('artist-modal');
 const modalName   = document.getElementById('modal-name');
 const modalPhoto  = document.getElementById('modal-photo');
 const modalLeft   = document.getElementById('modal-left');
-const modalNameBlock = artistModal?.querySelector('.artist-modal__nameblock');
+const modalNameBlock  = artistModal?.querySelector('.artist-modal__nameblock');
 const modalLinkListen = document.getElementById('modal-link-listen');
 const modalLinkAlbums = document.getElementById('modal-link-albums');
 const modalCta        = artistModal?.querySelector('.artist-modal__cta');
+const platformIcons   = artistModal?.querySelectorAll('.platform-icon');
 
 // Constrói word-spans de animação dentro de um elemento
 function buildModalWords(el, text) {
@@ -255,6 +256,20 @@ function openArtistModal(artist) {
   setTimeout(() => {
     animateModalWords(modalCta, 0, 0.12);
   }, 980);
+
+  // Fase 5 (1150ms): ícones das plataformas — sobem escalonados
+  platformIcons?.forEach((icon, i) => {
+    icon.classList.remove('is-visible');
+    icon.style.transition = 'none';
+    icon.style.transform  = 'translateY(14px)';
+    icon.style.opacity    = '0';
+    setTimeout(() => {
+      icon.style.transition = `opacity 0.55s ease, transform 0.6s cubic-bezier(0.16,1,0.3,1)`;
+      icon.style.opacity    = '0.75';
+      icon.style.transform  = 'translateY(0)';
+      icon.classList.add('is-visible');
+    }, 1150 + i * 90);
+  });
 }
 
 function closeArtistModal() {
@@ -263,6 +278,12 @@ function closeArtistModal() {
   artistModal.setAttribute('aria-hidden', 'true');
   document.body.style.overflow = '';
   modalNameBlock?.classList.remove('is-revealed');
+  platformIcons?.forEach(icon => {
+    icon.classList.remove('is-visible');
+    icon.style.transition = '';
+    icon.style.opacity    = '0';
+    icon.style.transform  = 'translateY(14px)';
+  });
 }
 
 modalPhoto?.addEventListener('click', closeArtistModal);
