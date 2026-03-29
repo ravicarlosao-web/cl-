@@ -923,6 +923,11 @@ body {
   flex: 1;
 }
 
+/* Espaçador de cima (2º filho) menor → links sobem */
+.artist-modal__left .artist-modal__spacer:nth-child(2) {
+  flex: 0.35;
+}
+
 /* Links de navegação do artista */
 .artist-modal__links {
   display: flex;
