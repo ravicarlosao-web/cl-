@@ -894,9 +894,11 @@ body {
 
 /* Bloco editorial: fundo branco, texto preto — estilo headline de jornal */
 .artist-modal__nameblock {
-  display: inline-block;
+  display: block;
+  width: 100%;
   background: #fff;
   padding: clamp(0.6rem, 1.5vh, 1rem) clamp(0.8rem, 2vw, 1.4rem);
+  margin-top: clamp(3rem, 9vh, 6rem);
 }
 
 .artist-modal__trac {
