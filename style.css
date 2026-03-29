@@ -1008,11 +1008,11 @@ body {
   right: 0;
   background-size: cover;
   background-position: center top;
-  transform: translateX(120px);
+  transform: translateX(160px);
   opacity: 0;
   transition:
-    transform 1.2s cubic-bezier(0.16, 1, 0.3, 1),
-    opacity   1.0s cubic-bezier(0.16, 1, 0.3, 1);
+    transform 2.0s cubic-bezier(0.16, 1, 0.3, 1),
+    opacity   1.6s cubic-bezier(0.16, 1, 0.3, 1);
   cursor: pointer;
 }
 
