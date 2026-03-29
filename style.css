@@ -977,6 +977,34 @@ body {
   font-weight: 700;
 }
 
+/* Ícones das plataformas de streaming */
+.artist-modal__platforms {
+  display: flex;
+  align-items: center;
+  gap: clamp(1rem, 2vw, 1.6rem);
+  margin-top: clamp(0.8rem, 2vh, 1.4rem);
+}
+
+.platform-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  opacity: 0.75;
+  transition: opacity 0.2s ease;
+  text-decoration: none;
+}
+
+.platform-icon:hover {
+  opacity: 1;
+}
+
+.platform-icon svg {
+  width: clamp(18px, 2.2vw, 26px);
+  height: clamp(18px, 2.2vw, 26px);
+  display: block;
+}
+
 /* CTA "Ouvir agora" fixo no fundo */
 .artist-modal__cta {
   margin-top: clamp(1rem, 2.5vh, 2rem);
