@@ -898,7 +898,7 @@ body {
 .artist-modal__nameblock {
   display: block;
   /* Estica apenas para a direita, por cima da foto */
-  width: calc(100% + 20vw);
+  width: calc(100% + 15vw);
   background: #fff;
   padding: clamp(0.6rem, 1.5vh, 1rem) clamp(0.8rem, 2vw, 1.4rem);
   margin-top: clamp(4rem, 14vh, 9rem);
@@ -929,6 +929,8 @@ body {
   flex-direction: column;
   gap: 0;
   margin-bottom: clamp(1.2rem, 3.5vh, 2.5rem);
+  align-items: center;
+  text-align: center;
 }
 
 .artist-modal__navlink {
@@ -961,6 +963,9 @@ body {
   text-decoration-color: rgba(255, 255, 255, 0.55);
   cursor: pointer;
   transition: text-decoration-color 0.25s ease;
+  text-align: center;
+  display: block;
+  width: 100%;
 }
 
 .artist-modal__cta:hover {
