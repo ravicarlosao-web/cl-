@@ -216,6 +216,16 @@ function animateModalWords(el, baseDelay = 0, stagger = 0.1) {
   });
 }
 
+// Anima as word-spans de um elemento para fora (descendo)
+function animateModalWordsOut(el, baseDelay = 0, stagger = 0.05) {
+  if (!el) return;
+  el.querySelectorAll('.modal-word').forEach((w, i) => {
+    const d = baseDelay + i * stagger;
+    w.style.transition = `transform 0.38s cubic-bezier(0.4,0,0.8,1) ${d}s`;
+    w.style.transform  = 'translateY(110%)';
+  });
+}
+
 function openArtistModal(artist) {
   if (!artistModal) return;
 
@@ -274,16 +284,57 @@ function openArtistModal(artist) {
 
 function closeArtistModal() {
   if (!artistModal) return;
-  artistModal.classList.remove('is-open');
-  artistModal.setAttribute('aria-hidden', 'true');
-  document.body.style.overflow = '';
-  modalNameBlock?.classList.remove('is-revealed');
-  platformIcons?.forEach(icon => {
-    icon.classList.remove('is-visible');
-    icon.style.transition = '';
-    icon.style.opacity    = '0';
-    icon.style.transform  = 'translateY(14px)';
+
+  // Fase reversa 1 (t=0): ícones descem em ordem inversa
+  const iconArr = Array.from(platformIcons ?? []);
+  iconArr.reverse().forEach((icon, i) => {
+    setTimeout(() => {
+      icon.style.transition = `opacity 0.3s ease, transform 0.35s cubic-bezier(0.4,0,0.8,1)`;
+      icon.style.opacity    = '0';
+      icon.style.transform  = 'translateY(14px)';
+      icon.classList.remove('is-visible');
+    }, i * 55);
   });
+
+  // Fase reversa 2 (t=50ms): palavras descem — CTA, links, nome
+  setTimeout(() => {
+    animateModalWordsOut(modalCta,        0,    0.05);
+    animateModalWordsOut(modalLinkAlbums, 0.08, 0.05);
+    animateModalWordsOut(modalLinkListen, 0.16, 0.05);
+    animateModalWordsOut(modalName,       0.26, 0.06);
+  }, 50);
+
+  // Fase reversa 3 (t=250ms): caixa branca colapsa para a esquerda
+  setTimeout(() => {
+    modalNameBlock?.classList.remove('is-revealed');
+  }, 250);
+
+  // Fase reversa 4 (t=350ms): foto sai para a direita
+  setTimeout(() => {
+    if (modalPhoto) {
+      modalPhoto.style.transition = 'transform 0.75s cubic-bezier(0.4,0,1,1), opacity 0.55s ease';
+      modalPhoto.style.transform  = 'translateX(100px)';
+      modalPhoto.style.opacity    = '0';
+    }
+  }, 350);
+
+  // Fase reversa 5 (t=700ms): remove is-open, restaura estado
+  setTimeout(() => {
+    artistModal.classList.remove('is-open');
+    artistModal.setAttribute('aria-hidden', 'true');
+    document.body.style.overflow = '';
+    // Repõe o photo para o estado inicial (para próxima abertura via CSS)
+    if (modalPhoto) {
+      modalPhoto.style.transition = '';
+      modalPhoto.style.transform  = '';
+      modalPhoto.style.opacity    = '';
+    }
+    iconArr.forEach(icon => {
+      icon.style.transition = '';
+      icon.style.opacity    = '0';
+      icon.style.transform  = 'translateY(14px)';
+    });
+  }, 700);
 }
 
 modalPhoto?.addEventListener('click', closeArtistModal);
