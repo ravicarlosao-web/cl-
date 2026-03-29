@@ -929,8 +929,6 @@ body {
   flex-direction: column;
   gap: 0;
   margin-bottom: clamp(1.2rem, 3.5vh, 2.5rem);
-  align-items: center;
-  text-align: center;
 }
 
 .artist-modal__navlink {
@@ -963,9 +961,6 @@ body {
   text-decoration-color: rgba(255, 255, 255, 0.55);
   cursor: pointer;
   transition: text-decoration-color 0.25s ease;
-  text-align: center;
-  display: block;
-  width: 100%;
 }
 
 .artist-modal__cta:hover {
