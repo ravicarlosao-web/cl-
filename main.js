@@ -176,21 +176,85 @@ heroScene.addEventListener('click', (e) => {
 // ================================================
 // ARTIST MODAL — abrir/fechar com animação suave
 // ================================================
-const artistModal   = document.getElementById('artist-modal');
-const modalName     = document.getElementById('modal-name');
-const modalPhoto    = document.getElementById('modal-photo');
-const modalLeft     = document.getElementById('modal-left');
-const modalNameEls  = artistModal?.querySelectorAll('.navlink-name');
+const artistModal = document.getElementById('artist-modal');
+const modalName   = document.getElementById('modal-name');
+const modalPhoto  = document.getElementById('modal-photo');
+const modalLeft   = document.getElementById('modal-left');
+const modalNameBlock = artistModal?.querySelector('.artist-modal__nameblock');
+const modalLinkListen = document.getElementById('modal-link-listen');
+const modalLinkAlbums = document.getElementById('modal-link-albums');
+const modalCta        = artistModal?.querySelector('.artist-modal__cta');
+
+// Constrói word-spans de animação dentro de um elemento
+function buildModalWords(el, text) {
+  if (!el) return;
+  el.innerHTML = '';
+  const words = text.trim().split(/\s+/).filter(Boolean);
+  words.forEach((word, i) => {
+    if (i > 0) el.appendChild(document.createTextNode('\u00A0'));
+    const wrap  = document.createElement('span');
+    wrap.className = 'modal-word-wrap';
+    const inner = document.createElement('span');
+    inner.className = 'modal-word';
+    inner.textContent = word;
+    wrap.appendChild(inner);
+    el.appendChild(wrap);
+  });
+}
+
+// Anima as word-spans de um elemento para dentro (subindo de baixo)
+function animateModalWords(el, baseDelay = 0, stagger = 0.1) {
+  if (!el) return;
+  el.querySelectorAll('.modal-word').forEach((w, i) => {
+    w.style.transition = 'none';
+    w.style.transform  = 'translateY(110%)';
+    void w.offsetWidth;
+    const d = baseDelay + i * stagger;
+    w.style.transition = `transform 0.78s cubic-bezier(0.16,1,0.3,1) ${d}s`;
+    w.style.transform  = 'translateY(0)';
+  });
+}
 
 function openArtistModal(artist) {
   if (!artistModal) return;
-  modalName.textContent                = artist.name;
-  modalPhoto.style.backgroundImage     = `url(${artist.photo})`;
-  modalNameEls?.forEach(el => (el.textContent = artist.name));
 
+  // Conteúdo
+  modalPhoto.style.backgroundImage = `url(${artist.photo})`;
+
+  // Constrói word-spans com texto final
+  buildModalWords(modalName, artist.name);
+  buildModalWords(modalLinkListen, `Ouvir ${artist.name} agora`);
+  buildModalWords(modalLinkAlbums, `Albuns do ${artist.name}`);
+  buildModalWords(modalCta, 'Ouvir agora');
+
+  // Reseta caixa
+  modalNameBlock?.classList.remove('is-revealed');
+
+  // Abre modal — foto desliza da direita via CSS
   artistModal.classList.add('is-open');
   artistModal.setAttribute('aria-hidden', 'false');
   document.body.style.overflow = 'hidden';
+
+  // Fase 1 (100ms): caixa branca revela-se da esquerda para a direita
+  setTimeout(() => {
+    modalNameBlock?.classList.add('is-revealed');
+  }, 100);
+
+  // Fase 2 (580ms): nome do artista — palavras sobem
+  setTimeout(() => {
+    animateModalWords(modalName, 0, 0.1);
+  }, 580);
+
+  // Fase 3 (780ms): links — palavras sobem em sequência
+  setTimeout(() => {
+    animateModalWords(modalLinkListen, 0,    0.09);
+    animateModalWords(modalLinkAlbums, 0.15, 0.09);
+  }, 780);
+
+  // Fase 4 (980ms): CTA "Ouvir agora"
+  setTimeout(() => {
+    animateModalWords(modalCta, 0, 0.12);
+  }, 980);
 }
 
 function closeArtistModal() {
@@ -198,6 +262,7 @@ function closeArtistModal() {
   artistModal.classList.remove('is-open');
   artistModal.setAttribute('aria-hidden', 'true');
   document.body.style.overflow = '';
+  modalNameBlock?.classList.remove('is-revealed');
 }
 
 modalPhoto?.addEventListener('click', closeArtistModal);

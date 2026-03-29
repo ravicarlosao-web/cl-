@@ -902,6 +902,27 @@ body {
   background: #fff;
   padding: clamp(0.6rem, 1.5vh, 1rem) clamp(0.8rem, 2vw, 1.4rem);
   margin-top: clamp(4rem, 14vh, 9rem);
+  /* Animação: caixa revela-se da esquerda para a direita */
+  clip-path: inset(0 100% 0 0);
+  transition: clip-path 0.55s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.artist-modal__nameblock.is-revealed {
+  clip-path: inset(0 0% 0 0);
+}
+
+/* Palavras animadas dentro do modal */
+.modal-word-wrap {
+  display: inline-block;
+  overflow: hidden;
+  vertical-align: bottom;
+  line-height: inherit;
+}
+
+.modal-word {
+  display: inline-block;
+  transform: translateY(110%);
+  will-change: transform;
 }
 
 .artist-modal__trac {
