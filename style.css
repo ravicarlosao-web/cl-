@@ -944,6 +944,7 @@ body {
   text-decoration: none;
   padding: 0.22rem 0;
   display: block;
+  letter-spacing: 1.5px;
   transition: opacity 0.2s ease;
 }
 
