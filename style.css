@@ -892,26 +892,24 @@ body {
   cursor: default;
 }
 
-/* Traço + nome do artista no topo (substitui o título grande) */
+/* Bloco editorial: fundo branco, texto preto — estilo headline de jornal */
 .artist-modal__nameblock {
-  display: flex;
-  flex-direction: column;
-  gap: clamp(0.6rem, 1.2vh, 1rem);
+  display: inline-block;
+  background: #fff;
+  padding: clamp(0.6rem, 1.5vh, 1rem) clamp(0.8rem, 2vw, 1.4rem);
 }
 
 .artist-modal__trac {
-  width: clamp(36px, 4.5vw, 56px);
-  height: 2px;
-  background: #fff;
+  display: none;
 }
 
 .artist-modal__name {
   font-family: 'Poppins', sans-serif;
-  font-size: clamp(1.4rem, 2.8vw, 2.4rem);
-  font-weight: 700;
-  color: #fff;
-  line-height: 1.1;
-  letter-spacing: -0.02em;
+  font-size: clamp(1.8rem, 3.8vw, 3.4rem);
+  font-weight: 800;
+  color: #000;
+  line-height: 1.06;
+  letter-spacing: -0.03em;
   margin: 0;
 }
 
@@ -1018,6 +1016,6 @@ body {
   }
 
   .artist-modal__name {
-    font-size: clamp(1.2rem, 5.5vw, 1.8rem);
+    font-size: clamp(1.4rem, 5.5vw, 2rem);
   }
 }
