@@ -1005,6 +1005,11 @@ body {
   display: block;
 }
 
+.platform-icon--wide svg {
+  width: clamp(48px, 6vw, 72px);
+  height: clamp(12px, 1.6vw, 20px);
+}
+
 /* CTA "Ouvir agora" fixo no fundo */
 .artist-modal__cta {
   margin-top: clamp(1rem, 2.5vh, 2rem);
