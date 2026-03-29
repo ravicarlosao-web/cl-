@@ -896,7 +896,7 @@ body {
 .artist-modal__nameblock {
   display: block;
   /* Estica apenas para a direita, por cima da foto */
-  width: calc(100% + 6vw);
+  width: calc(100% + 11vw);
   background: #fff;
   padding: clamp(0.6rem, 1.5vh, 1rem) clamp(0.8rem, 2vw, 1.4rem);
   margin-top: clamp(4rem, 14vh, 9rem);
