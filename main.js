@@ -318,12 +318,20 @@ function closeArtistModal() {
     }
   }, 350);
 
-  // Fase reversa 5 (t=700ms): remove is-open, restaura estado
+  // Fase reversa 5 (t=580ms): fecha o modal imediatamente sem delay visível
   setTimeout(() => {
+    artistModal.style.transition = 'opacity 0.12s ease';
+    artistModal.style.opacity    = '0';
+  }, 580);
+
+  // Fase reversa 6 (t=720ms): remove is-open e repõe tudo (modal já invisível)
+  setTimeout(() => {
+    artistModal.style.transition = '';
+    artistModal.style.opacity    = '';
     artistModal.classList.remove('is-open');
     artistModal.setAttribute('aria-hidden', 'true');
     document.body.style.overflow = '';
-    // Repõe o photo para o estado inicial (para próxima abertura via CSS)
+    modalNameBlock?.classList.remove('is-revealed');
     if (modalPhoto) {
       modalPhoto.style.transition = '';
       modalPhoto.style.transform  = '';
@@ -334,7 +342,7 @@ function closeArtistModal() {
       icon.style.opacity    = '0';
       icon.style.transform  = 'translateY(14px)';
     });
-  }, 700);
+  }, 720);
 }
 
 modalPhoto?.addEventListener('click', closeArtistModal);
